@@ -1,0 +1,78 @@
+.ordersWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+
+  .ordersContainer {
+    display: block;
+    width: 100%;
+    max-height: 280px;
+    background-color: var(--container-bg-table);
+    border-radius: 12px;
+
+    ul {
+      display: block;
+      padding: 1rem;
+    }
+
+    .noOrdersMessage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      height: 120px;
+      font-size: 22px;
+      opacity: 0.4;
+    }
+
+    .orderHeader {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .orderDetails {
+      .vendorInfo {
+        display: flex;
+        justify-content: space-between;
+        padding-block: 1rem;
+        align-items: center;
+        border-bottom: 1px solid var(--border-color);
+        padding: 10px 0;
+      }
+
+      .productImageWrapper {
+        display: block;
+
+        img {
+          display: block;
+          width: 80px;
+          height: 80px;
+        }
+      }
+    }
+    .orderSummary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 0;
+    }
+
+    .orderFooter {
+      display: block;
+      padding-top: 10px;
+      .viewOrderDetails {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &::after {
+          display: block;
+          content: '\F285';
+          font-family: 'Bootstrap-icons';
+        }
+      }
+    }
+  }
+}

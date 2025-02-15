@@ -1,0 +1,45 @@
+.guest_navbar_menu,
+.navbar_menu {
+  display: flex;
+  gap: 8px;
+
+  .account,
+  .favorite,
+  .cart {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &::before,
+    &::after {
+      display: block;
+      font-family: 'Bootstrap-icons', Arial, Helvetica, sans-serif;
+    }
+
+    // &::after {
+    //   content: '\F229';
+    //   font-size: 12px;
+    // }
+    // &:hover:after {
+    //   content: '\F235';
+    // }
+  }
+  & .navbar_menu_description {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .account::before {
+    content: '\F4E1';
+    font-size: 22px;
+  }
+  .favorite::before {
+    content: '\F415';
+    font-size: 20px;
+  }
+  .cart::before {
+    content: '\F244';
+    font-size: 20px;
+  }
+}

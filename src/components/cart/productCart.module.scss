@@ -1,0 +1,175 @@
+.my_cart_container {
+  display: block;
+  padding: 1rem;
+  background: var(--container-bg-between);
+  border-radius: 12px;
+
+  .my_cart_inner {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    @media (min-width: 1320px) {
+      flex-direction: row;
+    }
+  }
+  /* 🔹 TITLE */
+  .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  /* 🔹 PRODUCT CONTAINER */
+  .product_container_inner {
+    display: block;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+
+    @media (min-width: 1320px) {
+      max-width: 920px;
+    }
+
+    /* 🔹 BODY */
+    .body {
+      display: block;
+      padding: 0.75rem;
+      border-radius: 12px;
+      margin-block: 0.25rem;
+      background: var(--container-bg);
+
+      .product_description_container {
+        display: flex;
+        gap: 0.5rem;
+        padding-block: 0.5rem;
+        // margin-block: 5px;
+        background: var(--container-bg);
+        border-radius: 12px;
+        padding: 0.5rem;
+
+        .product_description {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          flex: 1;
+
+          .da {
+            font-size: 14px;
+          }
+
+          .product_description_more {
+            display: flex;
+            max-width: 60%;
+            justify-content: space-between;
+            color: var(--text-span-color);
+            font-size: 12px;
+            padding: 1rem 0;
+            .delivered_by {
+              font-weight: 500;
+            }
+
+            .stock {
+              font-weight: 600;
+              color: var(--success-color);
+            }
+          }
+
+          .delivered_in {
+            font-size: 12px;
+            color: rgb(4, 231, 4);
+            padding-block: 1rem;
+          }
+
+          .product_works_with {
+            a {
+              font-size: 12px;
+              color: var(--link-color);
+            }
+          }
+        }
+        .product_price_container {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: space-between;
+          gap: 1rem;
+          // padding: 0.5rem;
+          background: var(--container-bg);
+          border-radius: 8px;
+
+          /* 🔹 Product Price */
+          .product_price {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-primary);
+          }
+
+          /* 🔹 Product Counter */
+          .product_counter {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.25rem 0.5rem;
+            background: var(--counter-bg);
+
+            .decrease,
+            .increase {
+              width: 24px;
+              height: 24px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 1.2rem;
+              font-weight: bold;
+              cursor: pointer;
+              border-radius: 4px;
+              background: var(--button-bg);
+              color: var(--button-text);
+              transition: background 0.2s;
+
+              &:hover {
+                background: var(--button-hover);
+              }
+            }
+
+            .counter {
+              width: 30px;
+              text-align: center;
+              font-weight: bold;
+              font-size: 1rem;
+              color: var(--text-primary);
+            }
+          }
+
+          /* 🔹 Move to Favorite */
+          .move_to_favorite {
+            font-size: 0.875rem;
+            color: var(--link-color);
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.2s;
+
+            &:hover {
+              color: var(--link-hover);
+            }
+          }
+
+          /* 🔹 Delete from Cart */
+          .delete_from_cart {
+            font-size: 0.875rem;
+            color: var(--danger-color);
+            cursor: pointer;
+            font-weight: bold;
+            transition: color 0.2s;
+
+            &:hover {
+              color: var(--danger-hover);
+            }
+          }
+        }
+      }
+    }
+  }
+}

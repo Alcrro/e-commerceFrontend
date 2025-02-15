@@ -1,0 +1,19 @@
+.favorite_container {
+  display: block;
+  background: var(--background-between-bg);
+  padding: 1rem;
+
+  .product_container {
+    display: block;
+    width: 100%;
+
+    .product_container_inner {
+      display: flex;
+      background: var(--container-bg);
+      gap: 4px;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+    }
+  }
+}

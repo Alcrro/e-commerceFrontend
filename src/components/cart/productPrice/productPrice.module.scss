@@ -1,0 +1,82 @@
+.product_price_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  // padding: 0.5rem;
+  background: var(--container-bg);
+  border-radius: 8px;
+
+  /* 🔹 Product Price */
+  .product_price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-primary);
+  }
+
+  /* 🔹 Product Counter */
+  .product_counter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.25rem 0.5rem;
+    background: var(--counter-bg);
+
+    .decrease,
+    .increase {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+      background: var(--button-bg);
+      color: var(--button-text);
+      transition: background 0.2s;
+
+      &:hover {
+        background: var(--button-hover);
+      }
+    }
+
+    .counter {
+      width: 30px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+  }
+
+  /* 🔹 Move to Favorite */
+  .move_to_favorite {
+    font-size: 0.875rem;
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--link-hover);
+    }
+  }
+
+  /* 🔹 Delete from Cart */
+  .delete_from_cart {
+    font-size: 0.875rem;
+    color: var(--danger-color);
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--danger-hover);
+    }
+  }
+}

@@ -1,0 +1,31 @@
+.product_container {
+  /* 🔹 PRODUCT CONTAINER */
+  .product_container_inner {
+    display: block;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+
+    @media (min-width: 1320px) {
+      max-width: 920px;
+    }
+
+    .product_description_container {
+      display: flex;
+      gap: 0.5rem;
+      margin-block: 0.25rem;
+      padding-block: 0.5rem;
+      // margin-block: 5px;
+      background: var(--container-bg);
+      border-radius: 12px;
+      padding: 0.5rem;
+    }
+    /* 🔹 FOOTER */
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+}

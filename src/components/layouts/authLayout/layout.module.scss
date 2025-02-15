@@ -1,0 +1,17 @@
+.auth_layout_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  .auth_layout {
+    display: block;
+    position: relative;
+    top: -120px;
+    max-width: 240px;
+    width: 100%;
+    .title {
+      text-align: center;
+    }
+  }
+}

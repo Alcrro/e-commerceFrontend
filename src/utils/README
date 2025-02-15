@@ -1,0 +1,2 @@
+Utility functions (e.g., formatting price, currency conversion, etc.).
+Example: src/utils/formatCurrency.ts.

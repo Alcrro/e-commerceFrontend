@@ -1,0 +1,2 @@
+1.  Custom React hooks to manage data fetching, cart, authentication, etc.
+2.  Example: src/hooks/useCart.ts, src/hooks/useProducts.ts

@@ -1,0 +1,67 @@
+.notification {
+  display: block;
+  min-width: 220px;
+  min-height: 220px;
+  max-height: 320px;
+  margin: 0.5rem 0;
+  overflow: auto;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    a {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .notification_title {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      font-size: 1rem;
+      margin: auto;
+      width: 100%;
+
+      span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        text-align: center;
+
+        &:before {
+          content: '\F309';
+          font-family: 'Bootstrap-icons', Arial, Helvetica, sans-serif;
+          font-size: 2rem;
+        }
+      }
+
+      .Low {
+        &::before {
+          color: green;
+        }
+      }
+      .Medium {
+        &::before {
+          color: blue;
+        }
+      }
+      .High {
+        &::before {
+          color: red;
+        }
+      }
+    }
+    .notification_content {
+      display: -webkit-box;
+      -webkit-line-clamp: 2; // Limits the text to 2 lines
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-indent: 20px;
+      font-size: 0.75rem;
+    }
+  }
+}

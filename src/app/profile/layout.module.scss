@@ -1,0 +1,12 @@
+.profile_main {
+  display: block;
+  min-width: 100%;
+  // background: var(--container-bg);
+  padding-left: 0.5rem;
+  border-radius: 12px;
+
+  @media (width<760px) {
+    padding-left: unset;
+    padding-top: 0.5rem;
+  }
+}

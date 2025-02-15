@@ -1,0 +1,53 @@
+// styles/components/ui/dropdown.module.scss
+.dropdown {
+  position: relative;
+  width: 200px;
+  cursor: pointer;
+
+  @media (width<300px) {
+    margin: 0 auto;
+  }
+
+  .selected {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 15px;
+    background: var(--container-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+
+    &::after {
+      content: '\F229';
+      font-family: 'Bootstrap-icons';
+      color: gray;
+    }
+    &.isOpen::after {
+      content: '\F235';
+      font-family: 'Bootstrap-icons';
+      color: gray;
+    }
+  }
+
+  .list {
+    position: absolute;
+    width: 100%;
+    background: var(--container-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    li {
+      display: block;
+      padding: 5px;
+      margin: 10px;
+
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+  }
+}

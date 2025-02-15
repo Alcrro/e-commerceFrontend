@@ -1,0 +1,56 @@
+.profile_address {
+  .profile_address_title {
+    display: block;
+    padding-bottom: 0.5rem;
+    font-size: 24px;
+  }
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1rem;
+    .address_outer {
+      display: flex;
+      gap: 0.5rem;
+      background: var(--container-bg);
+      padding: 1rem;
+      border-radius: 12px;
+
+      .address_inner {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        .address_header {
+          font-weight: bold;
+        }
+        .address_body {
+          display: block;
+          font-size: 0.8rem;
+          color: #8f8f8f;
+          padding-top: 0.5rem;
+        }
+        .address_footer {
+          display: flex;
+          align-items: center;
+          padding-top: 2rem;
+          gap: 1rem;
+          margin-top: auto;
+        }
+      }
+
+      &::before {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        content: '\F3E7';
+        font-family: 'Bootstrap-icons';
+        color: blue;
+        background-color: var(--background);
+        border-radius: 50%;
+        font-size: 28px;
+        padding: 1rem;
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+}

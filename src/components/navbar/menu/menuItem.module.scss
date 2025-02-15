@@ -1,0 +1,89 @@
+.account_inner,
+.favorite_inner,
+.cart_inner {
+  .account,
+  .favorite,
+  .cart {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    img {
+      display: block;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+    }
+  }
+
+  .account_modal,
+  .favorite_modal {
+    display: none; // Default hidden
+    position: absolute;
+    top: 100%;
+    left: -50%;
+    transform: translate(-50%, -10px);
+    z-index: 10;
+    opacity: 0;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .cart_modal {
+    display: none; // Default hidden
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 10;
+    opacity: 0;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+
+    @media (min-width: 95rem) {
+      right: unset;
+      left: -50%;
+      transform: translate(50%, -10px);
+    }
+  }
+  // Show dropdown on hover with animation
+  &:hover .account_modal,
+  &:hover .favorite_modal,
+  &:hover .cart_modal {
+    display: block; // Set display to block
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  // Keyframes for animation
+  @keyframes fadeIn {
+    0% {
+      opacity: 1;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.account_inner,
+.favorite_inner,
+.cart_inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  &::before,
+  &::after {
+    display: block;
+    font-family: 'Bootstrap-icons', Arial, Helvetica, sans-serif;
+  }
+
+  &::after {
+    content: '\F229';
+    font-size: 12px;
+  }
+  &:hover:after {
+    content: '\F235';
+  }
+}

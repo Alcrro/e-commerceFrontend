@@ -1,0 +1,2 @@
+State management for global state (e.g., using Zustand or Redux).
+Example: src/store/cartStore.ts for managing the shopping cart state.

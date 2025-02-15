@@ -1,0 +1,37 @@
+.my_account_container {
+  display: block;
+  padding: 1rem;
+  background: var(--container-bg-between);
+  border-radius: 12px;
+  .my_account_title {
+    font-size: 20px;
+  }
+
+  .my_account_inner {
+    display: flex;
+    justify-content: space-between;
+    padding-block: 1rem;
+    .my_account_image {
+      img {
+        display: block;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+      }
+    }
+
+    .my_account_history {
+      display: block;
+      padding: 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+    }
+  }
+
+  .edit_my_account_button {
+    display: block;
+    text-align: center;
+    color: var(--link-color);
+    border-top: 1px solid var(--border-color);
+  }
+}

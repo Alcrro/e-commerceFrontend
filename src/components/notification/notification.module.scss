@@ -1,0 +1,19 @@
+.notification_container {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+}
+
+.notification_inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: red;
+  color: white; /* Ensures the text is visible */
+  border-radius: 50%; /* Fully rounded */
+  width: 18px; /* Increase the size to accommodate the number */
+  height: 18px;
+
+  font-size: 12px; /* Adjust font size for the number */
+  font-weight: bold;
+}

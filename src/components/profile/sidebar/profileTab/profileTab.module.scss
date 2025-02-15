@@ -1,0 +1,72 @@
+.profile_tab {
+  background: linear-gradient(45deg, #940946, #0057a1);
+  border-radius: 12px;
+  position: relative;
+
+  @media (width>300px) {
+    height: 120px;
+  }
+
+  .profile_tab_inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    min-height: 75px;
+    color: #fff;
+
+    @media (width<300px) {
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+    .profile_tab_image {
+      display: block;
+      min-width: 60px;
+
+      img {
+        display: block;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+
+      .guest {
+        display: block;
+        width: 40px;
+      }
+    }
+    .profile_tab_name {
+      order: 3;
+      display: block;
+      // min-width: 180px;
+      text-align: center;
+      width: 100%;
+
+      @media (min-width: 300px) {
+        order: unset;
+        min-width: unset;
+        width: 100%;
+      }
+      .main_row {
+        font-size: 1.5rem;
+        text-transform: capitalize;
+      }
+      .second_row {
+        font-size: 0.75rem;
+      }
+    }
+
+    .profile_tab_edit {
+      min-width: 42px;
+    }
+  }
+}
+.aux_profile_tab_high_dist {
+  display: block;
+
+  @media (width>300px) {
+    height: 50px;
+  }
+}

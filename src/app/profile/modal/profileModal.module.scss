@@ -1,0 +1,38 @@
+.modal_wrapper {
+  position: fixed; /* Use fixed to ensure it covers the entire viewport */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Ensures modal content is above other content */
+}
+
+.overlay {
+  position: absolute; /* Use absolute for overlay so it covers the entire screen */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  z-index: 998; /* Behind the modal but above other content */
+  pointer-events: auto; /* Allow interaction with the overlay if needed, for closing or events */
+}
+
+.profile_modal {
+  position: relative; /* Relative to allow positioning over the overlay */
+  background: var(--container-bg);
+  padding: 1rem;
+  border-radius: 12px;
+  z-index: 1000; /* Ensures modal sits above the overlay */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}

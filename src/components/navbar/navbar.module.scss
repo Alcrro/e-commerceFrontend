@@ -1,0 +1,9 @@
+.navbar_container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem;
+  align-items: center;
+  background: var(--container-bg);
+  margin: 10px 0;
+  border-radius: 12px;
+}

@@ -1,0 +1,60 @@
+.menu_item {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+
+  &::before {
+    font-family: 'Bootstrap-icons';
+    font-size: 20px;
+    border-radius: 8px;
+    padding: 0.25rem 0.5rem;
+    color: #fff;
+  }
+
+  &.icon_address::before {
+    content: '\F3E7'; // Address icon
+    background-color: red;
+  }
+
+  &.icon_orders::before {
+    content: '\F444'; // Orders icon
+    background-color: blue;
+  }
+
+  &.icon_favorite::before {
+    content: '\F415'; // Heart icon
+    background-color: orange;
+  }
+
+  &.icon_settings::before {
+    content: '\F493'; // Settings icon
+    background-color: purple;
+  }
+
+  &.icon_cart::before {
+    content: '\F290'; // Cart icon
+    background-color: blue;
+  }
+
+  &.icon_notification::before {
+    content: '\F189'; // Notification icon
+    background-color: orange;
+
+    &:hover {
+      background: red;
+    }
+  }
+
+  &:hover:not(.active) {
+    // color: #979696;
+    opacity: 0.7;
+    color: #797979;
+  }
+  &.active {
+    font-size: 1.2rem;
+  }
+}

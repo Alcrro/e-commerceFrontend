@@ -1,0 +1,86 @@
+.modal_container {
+  display: block;
+  min-width: 40rem;
+
+  margin: 0 auto;
+  padding: 1rem;
+
+  @media (min-width: 80rem) {
+    min-width: 60rem;
+  }
+
+  .profile_modal_body {
+    .edit_address_form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin: 0;
+
+      .form_group {
+        display: flex;
+        flex-direction: column;
+
+        gap: 0.5rem;
+
+        label {
+          font-size: 1rem;
+          color: #333;
+        }
+        input {
+          padding: 0.75rem;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          font-size: 1rem;
+          color: #888585;
+          transition: border-color 0.3s ease;
+
+          &:focus {
+            border-color: #0066cc;
+            outline: none;
+            color: #fff;
+          }
+        }
+
+        .form_group_combined {
+          display: flex;
+
+          gap: 0.5rem;
+        }
+        .countryCode {
+          display: block;
+          text-align: center;
+          max-width: 70px;
+          padding-inline: 4px;
+        }
+        .phone_number {
+          width: 100%;
+        }
+      }
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      background-color: #0066cc;
+      color: #fff;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #005bb5;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .modal_container {
+    padding: 1rem;
+  }
+
+  .modal_form {
+    grid-template-columns: 1fr;
+  }
+}

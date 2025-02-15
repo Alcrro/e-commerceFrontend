@@ -1,0 +1,46 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10;
+  max-width: 260px;
+
+  .group_label {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 4px;
+
+    input {
+      display: block;
+      padding: 0.25rem 1rem;
+      border-radius: 20px;
+      color: black;
+      position: relative;
+
+      &:focus {
+        background-color: #e7f3ff;
+        outline: none;
+      }
+    }
+
+    .wrapper {
+      &[type='password'],
+      &::after {
+        font-family: 'bootstrap-icons';
+        font-weight: 800;
+        font-size: 20px;
+        content: '\F341';
+        position: absolute;
+        top: 50%;
+        right: 14px;
+        transform: translate(0, -50%);
+
+        color: #aaa;
+      }
+    }
+  }
+  .buton_auth_conainer {
+    display: block;
+    margin-top: 10px;
+  }
+}

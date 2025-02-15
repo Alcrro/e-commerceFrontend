@@ -1,0 +1,93 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  width: 100%;
+
+  &.primary {
+    background-color: #0070f3;
+    color: #fff;
+  }
+
+  &.secondary {
+    background-color: green;
+    color: #fff;
+  }
+
+  &.danger {
+    background-color: rgb(194, 6, 6);
+    color: #fff;
+  }
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  .icon {
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+  &::after,
+  &::before {
+    font-family: 'Bootstrap-icons';
+  }
+
+  &.favorite_icon {
+    position: relative;
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 20px;
+      z-index: 999;
+      content: '\F417';
+      font-family: 'Bootstrap-icons';
+    }
+  }
+  &.favorite_icon_added {
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 20px;
+      content: '\F415';
+      font-family: 'Bootstrap-icons';
+      color: red;
+    }
+  }
+  &.none {
+    display: block;
+  }
+
+  &.profile_edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff36;
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+    width: 40px;
+    &::after {
+      content: '\F4CB';
+      font-family: 'Bootstrap-icons';
+      position: relative;
+      z-index: 5;
+      color: white;
+    }
+  }
+  &.close_modal::before {
+    content: '\F62A';
+    font-family: 'Bootstrap-icons';
+  }
+
+  .set_default_address {
+    display: block;
+    max-width: 120px;
+  }
+}

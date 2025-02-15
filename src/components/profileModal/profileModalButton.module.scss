@@ -1,0 +1,11 @@
+.update_address_btn {
+  display: flex;
+  justify-content: space-evenly;
+  // max-width: 20rem;
+
+  margin: 1rem auto;
+
+  button {
+    max-width: 200px;
+  }
+}

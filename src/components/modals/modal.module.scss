@@ -1,0 +1,34 @@
+.account_modal,
+.favorite_modal,
+.cart_modal {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%);
+  width: max-content;
+
+  // Show dropdown on hover with animation
+  &:hover .account_modal,
+  &:hover .favorite_modal,
+  &:hover .cart_modal {
+    display: block; // Set display to block
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  // Keyframes for animation
+  @keyframes fadeIn {
+    0% {
+      opacity: 1;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.invalid_class {
+  display: block;
+}

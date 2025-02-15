@@ -1,0 +1,27 @@
+// Light Mode
+$background-light: #f8f9fa;
+$foreground-light: #171717;
+$text-light: #000;
+$text-container-light: #fff;
+$container-light: #fff;
+$container-bg-between-light: #fcfcfc;
+$container-bg-table-light: #f0f8ff;
+$light-link-color: #007bff; // Light theme link color
+$light-link-hover: ($light-link-color, 10%); // Light theme hover effec
+$link-decoration-color-light: #007bff;
+$text-span-color-light: #222;
+$border-color-light: #ddd;
+
+// Dark Mode
+$background-dark: #1a1a1a;
+$foreground-dark: #ededed;
+$text-dark: #fff;
+$text-container-dark: #000;
+$container-dark: #0e0d0d;
+$container-bg-between-dark: #141414;
+$container-bg-table-dark: #2a2a2a;
+$link-decoration-color-dark: #4c9aff;
+$dark-link-color: #4c9aff; // Dark theme link color
+$dark-link-hover: ($dark-link-color, 10%); // Dark theme hover effect
+$text-span-color-dark: #eee;
+$border-color-dark: #444;

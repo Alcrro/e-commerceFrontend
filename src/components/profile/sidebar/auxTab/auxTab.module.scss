@@ -1,0 +1,96 @@
+.aux_profile_tab_outer {
+  display: block;
+  height: 50px;
+  position: absolute;
+  bottom: 40px;
+  width: 96%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  @media (min-width: 500px) {
+    max-width: 300px;
+  }
+  @media (width<300px) {
+    position: relative;
+    top: 0px;
+    height: 100%;
+  }
+}
+
+.aux_profile_tab_inner {
+  display: block;
+  // position: absolute;
+
+  background: #00000070;
+
+  min-width: 100%;
+  min-height: 100%;
+  border-radius: 12px;
+  z-index: inherit;
+
+  @media (width>300px) {
+    position: absolute;
+  }
+  ul {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(50px, 1fr)
+    ); // 4 columns in large screens
+    gap: 1rem; // Adds spacing between items
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0.25rem 0;
+    @media (max-width: 300px) {
+      // On smaller screens, switch to 2x2
+      grid-template-columns: repeat(2, 1fr); // 2 columns
+      grid-auto-rows: auto; // Adjust row height automatically
+    }
+
+    a {
+      display: block;
+      color: #fff;
+      &::before {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+        font-family: 'Bootstrap-icons';
+        font-size: 26px;
+        margin: 0 auto;
+        border-radius: 50%;
+        width: 42px;
+        height: 42px;
+
+        @media (width<720px) {
+          font-size: 20px;
+          width: 36px;
+          height: 36px;
+        }
+      }
+      &.icon_wallet::before {
+        content: '\F2DB';
+      }
+
+      &.icon_support::before {
+        content: '\F414';
+      }
+      &.icon_order::before {
+        content: '\F444';
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      .wallet_description,
+      .support_description,
+      .support_order {
+        font-size: 0.9rem;
+        text-align: center;
+        white-space: nowrap;
+      }
+    }
+  }
+}
