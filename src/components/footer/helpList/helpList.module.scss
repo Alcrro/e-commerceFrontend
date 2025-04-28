@@ -1,0 +1,46 @@
+@use '@/styles/abstracts/mixins' as *;
+
+.help_list_container {
+  // position: absolute;
+  background: var(--footer-background);
+  color: var(--footer-text);
+  padding: 1rem;
+  margin-block: 10px;
+
+  @media (min-width: 820px) {
+    .help_list {
+      @include flex(flex-start, row, center, 1rem);
+      flex-wrap: wrap;
+      position: relative;
+      max-width: 97rem;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .help_list_li {
+      display: block;
+      flex: 1 0 220px;
+      text-align: center;
+
+      .help_list_title {
+        font-size: 1.2em;
+
+        &::first-letter {
+          text-transform: uppercase;
+        }
+      }
+
+      a {
+        display: block;
+        width: fit-content;
+        margin: 0 auto;
+        color: var(--footer-link);
+        font-size: small;
+
+        &:hover {
+          color: var(--footer-button-hover);
+        }
+      }
+    }
+  }
+}
