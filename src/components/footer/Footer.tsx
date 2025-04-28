@@ -1,3 +1,4 @@
+//Footer component updated
 import React from 'react';
 import HelpList from './helpList/HelpList';
 import QuestionsAbout from './questionsAbout/QuestionsAbout';
