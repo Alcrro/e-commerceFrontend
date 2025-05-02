@@ -8,9 +8,8 @@ jobs:
   add-to-project:
     runs-on: ubuntu-latest
     permissions:
-      issues: write
-      project: write
-      contents: read
+      issues: write      # Allows modifying issue labels and content
+      contents: read     # Allows reading the content of the repo
 
     steps:
       - name: Add issue to project and update status
