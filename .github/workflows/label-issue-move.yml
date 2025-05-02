@@ -1,66 +1,80 @@
-name: Move Issues Based on Labels
+name: Auto-add Issues to Project V2 and Set Status
 
 on:
   issues:
-    types: [labeled, unlabeled]
+    types: [labeled]
 
 jobs:
-  move-issue:
+  add-to-project:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      project: write
+      contents: read
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Add issue to project and update status
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue = context.payload.issue;
+            const label = context.payload.label.name;
 
-    - name: Move issue based on label
-      uses: actions/github-script@v5
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const issue = context.issue;
-          const label = context.payload.label.name;
+            const labelToStatus = {
+              "in progress": "47fc9ee4",
+              "blocked": "c6d9dc00",
+              "ready for review": "c028b65f",
+              "done": "98236657",
+              "bug": "f75ad846", // send bugs to Todo (Ready)
+              "enhancement": "84efa04b", // Backlog
+              "question": "d19063af" // Notes
+            };
 
-          // Define label-to-project mapping
-          const labelToProject = {
-            'accessibility': 'accessibility-project-id',
-            'ARIA, screen reader, keyboard': 'accessibility-project-id',
-            'blocked': 'blocked-project-id',
-            'bug': 'bug-project-id',
-            'component': 'component-project-id',
-            'documentation': 'documentation-project-id',
-            'duplicate': 'duplicate-project-id',
-            'enhancement': 'enhancement-project-id',
-            'frontend': 'frontend-project-id',
-            'good first issue': 'good-first-issue-project-id',
-            'help wanted': 'help-wanted-project-id',
-            'high-priority': 'high-priority-project-id',
-            'hover': 'hover-project-id',
-            'in progress': 'in-progress-project-id',
-            'integration-test': 'integration-test-project-id',
-            'invalid': 'invalid-project-id',
-            'lazy-loading': 'lazy-loading-project-id',
-            'low-priority': 'low-priority-project-id',
-            'medium-priority': 'medium-priority-project-id',
-            'optimization': 'optimization-project-id',
-            'question': 'question-project-id',
-            'ready for review': 'ready-for-review-project-id',
-            'refactor': 'refactor-project-id',
-            'state': 'state-project-id',
-            'test': 'test-project-id',
-            'UI': 'ui-project-id',
-            'UX': 'ux-project-id'
-          };
+            const projectId = "PVT_kwHOBcYL5M4A3sd8";
+            const statusFieldId = "PVTSSF_lAHOBcYL5M4A3sd8zgsycoA";
 
-          // If the label is in the mapping, move the issue to the corresponding project
-          if (labelToProject[label]) {
-            const projectId = labelToProject[label];
-            const moveIssueResponse = await github.projects.createCard({
-              column_id: projectId,
-              content_id: issue.id,
-              content_type: 'Issue'
+            const statusOptionId = labelToStatus[label.toLowerCase()];
+            if (!statusOptionId) {
+              console.log("Label not mapped to a status, skipping.");
+              return;
+            }
+
+            const item = await github.graphql(`
+              mutation($projectId:ID!, $contentId:ID!) {
+                addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) {
+                  item {
+                    id
+                  }
+                }
+              }
+            `, {
+              projectId,
+              contentId: issue.node_id
             });
 
-            console.log(`Issue moved to project: ${moveIssueResponse.data.project_url}`);
-          } else {
-            console.log('Label does not trigger issue move.');
-          }
+            const itemId = item.addProjectV2ItemById.item.id;
+
+            await github.graphql(`
+              mutation($projectId:ID!, $itemId:ID!, $fieldId:ID!, $optionId:String!) {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: $projectId,
+                  itemId: $itemId,
+                  fieldId: $fieldId,
+                  value: {
+                    singleSelectOptionId: $optionId
+                  }
+                }) {
+                  projectV2Item {
+                    id
+                  }
+                }
+              }
+            `, {
+              projectId,
+              itemId,
+              fieldId: statusFieldId,
+              optionId: statusOptionId
+            });
+
+            console.log(`Issue added to project and status set to ${label}`);
