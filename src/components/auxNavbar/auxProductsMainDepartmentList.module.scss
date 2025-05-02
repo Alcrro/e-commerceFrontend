@@ -1,0 +1,163 @@
+.elements_list {
+  // width: fit-content;
+  position: relative;
+
+  &.active {
+    display: flex;
+    // padding: 0.5rem;
+    border-bottom-left-radius: 12px;
+    @media (min-width: 97rem) {
+      border-top-left-radius: 12px;
+    }
+
+    .elementItem::after {
+      content: unset;
+    }
+  }
+  ul {
+    padding: 10px;
+    background: var(--container-bg);
+  }
+  .elementItem {
+    display: flex;
+    align-items: center;
+    // padding: 10px;
+    padding-bottom: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+
+    // font-family: 'bootstrap-icons';
+
+    &::before,
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      font-family: 'bootstrap-icons';
+    }
+    &::after {
+      content: '\F285';
+      margin-left: auto;
+      margin-right: unset;
+    }
+    &:hover {
+      .text {
+        opacity: 0.6;
+      }
+    }
+
+    &:hover::after {
+      opacity: 0.6;
+    }
+  }
+
+  .laptop::before {
+    content: '\F109';
+  }
+  .desktop::before {
+    content: '\F108';
+  }
+  .tv::before {
+    content: '\F26C';
+  }
+  .fridge::before {
+    content: '\F2A5';
+  }
+  .gaming::before {
+    content: '\F11B';
+  }
+  .grocery::before {
+    content: '\F290';
+  }
+  .fashion::before {
+    content: '\F1B0';
+  }
+  .cosmetics::before {
+    content: '\F1A1';
+  }
+  .home::before {
+    content: '\F015';
+  }
+  .sport::before {
+    content: '\F1FC';
+  }
+  .car::before {
+    content: '\F1B9';
+  }
+  .toys::before {
+    content: '\F1F8';
+  }
+
+  &:not(.active) {
+    .subDepartmentList_container {
+      position: absolute;
+      top: -10px;
+      height: 100%;
+      left: 320px;
+      background: var(--container-bg);
+      min-width: 74rem;
+      // min-width: 100%;
+      padding: 0.5rem;
+
+      .subDepartmentList_ul {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap; // Ensure wrapping
+        gap: 10px;
+        list-style: none;
+        padding: 0;
+
+        li {
+          flex: 1 0 200px;
+        }
+      }
+    }
+  }
+  .subDepartmentList_container {
+    position: absolute;
+    top: 0px;
+    left: 293px; // Align next to main department
+    background: var(--container-bg);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    z-index: 20;
+    width: calc(100% - 293px);
+    height: 100%;
+
+    .subDepartmentList_ul {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap; // Ensure wrapping
+      gap: 10px;
+      list-style: none;
+      padding: 0;
+    }
+    &.active {
+      display: block;
+    }
+    &.hidden {
+      display: none;
+      visibility: hidden;
+    }
+
+    li {
+      flex: 1 1 200px;
+      white-space: nowrap;
+      @media (max-width: 1024px) {
+        flex: 1 1 calc(50% - 10px); // 2 items per row on tablets
+      }
+
+      @media (max-width: 768px) {
+        flex: 1 1 100%; // 1 item per row on small screens
+      }
+    }
+
+    @media (max-width: 768px) {
+      position: static; // Remove absolute positioning for stacking
+      width: 100%; // Ensure full width on mobile
+    }
+  }
+}
