@@ -1,0 +1,66 @@
+name: Move Issues Based on Labels
+
+on:
+  issues:
+    types: [labeled, unlabeled]
+
+jobs:
+  move-issue:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Move issue based on label
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const issue = context.issue;
+          const label = context.payload.label.name;
+
+          // Define label-to-project mapping
+          const labelToProject = {
+            'accessibility': 'accessibility-project-id',
+            'ARIA, screen reader, keyboard': 'accessibility-project-id',
+            'blocked': 'blocked-project-id',
+            'bug': 'bug-project-id',
+            'component': 'component-project-id',
+            'documentation': 'documentation-project-id',
+            'duplicate': 'duplicate-project-id',
+            'enhancement': 'enhancement-project-id',
+            'frontend': 'frontend-project-id',
+            'good first issue': 'good-first-issue-project-id',
+            'help wanted': 'help-wanted-project-id',
+            'high-priority': 'high-priority-project-id',
+            'hover': 'hover-project-id',
+            'in progress': 'in-progress-project-id',
+            'integration-test': 'integration-test-project-id',
+            'invalid': 'invalid-project-id',
+            'lazy-loading': 'lazy-loading-project-id',
+            'low-priority': 'low-priority-project-id',
+            'medium-priority': 'medium-priority-project-id',
+            'optimization': 'optimization-project-id',
+            'question': 'question-project-id',
+            'ready for review': 'ready-for-review-project-id',
+            'refactor': 'refactor-project-id',
+            'state': 'state-project-id',
+            'test': 'test-project-id',
+            'UI': 'ui-project-id',
+            'UX': 'ux-project-id'
+          };
+
+          // If the label is in the mapping, move the issue to the corresponding project
+          if (labelToProject[label]) {
+            const projectId = labelToProject[label];
+            const moveIssueResponse = await github.projects.createCard({
+              column_id: projectId,
+              content_id: issue.id,
+              content_type: 'Issue'
+            });
+
+            console.log(`Issue moved to project: ${moveIssueResponse.data.project_url}`);
+          } else {
+            console.log('Label does not trigger issue move.');
+          }
