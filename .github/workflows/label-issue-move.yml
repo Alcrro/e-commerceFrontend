@@ -8,14 +8,15 @@ jobs:
   add-to-project:
     runs-on: ubuntu-latest
     permissions:
-      issues: write      # Allows modifying issue labels and content
-      contents: read     # Allows reading the content of the repo
+      issues: write       # Allows modifying issue labels and content
+      contents: read      # Allows reading the content of the repo
+      projects: write     # Grants write access to GitHub Projects (needed for Project V2)
 
     steps:
       - name: Add issue to project and update status
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.MYGITHUB_TOKEN }}  # Use the token stored in secrets
           script: |
             const issue = context.payload.issue;
             const label = context.payload.label.name;
