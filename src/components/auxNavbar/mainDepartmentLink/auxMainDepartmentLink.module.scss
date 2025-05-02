@@ -1,0 +1,82 @@
+.elementItem {
+  display: flex;
+  align-items: center;
+  // padding: 10px;
+  padding-bottom: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+
+  .text {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+  }
+  // font-family: 'bootstrap-icons';
+
+  &::before,
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    font-family: 'bootstrap-icons';
+  }
+  &::after {
+    content: '\F285';
+    margin-left: auto;
+    margin-right: unset;
+  }
+  &:hover {
+    .text {
+      opacity: 0.6;
+    }
+  }
+
+  &:hover::after {
+    opacity: 0.6;
+  }
+}
+.elementItem.isActive {
+  &::after {
+    content: unset;
+  }
+}
+
+.laptop::before {
+  content: '\F109';
+}
+.desktop::before {
+  content: '\F108';
+}
+.tv::before {
+  content: '\F26C';
+}
+.fridge::before {
+  content: '\F2A5';
+}
+.gaming::before {
+  content: '\F11B';
+}
+.grocery::before {
+  content: '\F290';
+}
+.fashion::before {
+  content: '\F1B0';
+}
+.cosmetics::before {
+  content: '\F1A1';
+}
+.home::before {
+  content: '\F015';
+}
+.sport::before {
+  content: '\F1FC';
+}
+.car::before {
+  content: '\F1B9';
+}
+.toys::before {
+  content: '\F1F8';
+}
