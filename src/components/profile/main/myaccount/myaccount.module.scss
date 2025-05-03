@@ -9,12 +9,16 @@
 
   .my_account_inner {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     padding-block: 1rem;
+    gap: 2rem;
+    flex-wrap: wrap;
     .my_account_image {
       img {
         display: block;
-        width: 120px;
+        min-width: 120px;
+        max-width: 120px;
         height: 120px;
         border-radius: 50%;
       }
@@ -25,6 +29,63 @@
       padding: 1rem;
       border: 1px solid var(--border-color);
       border-radius: 12px;
+    }
+
+    .my_account_details {
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      align-items: center;
+      max-width: 340px;
+      width: 100%;
+
+      .col {
+        display: grid;
+        grid-template-columns: 140px 240px;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1rem;
+        // flex-wrap: wrap;
+        text-align: center; // Ensures text aligns properly when wrapped
+        margin-bottom: 10px;
+
+        @media (max-width: 1050px) {
+          grid-template-columns: 1fr;
+          max-width: 240px;
+          justify-content: center;
+        }
+
+        .field_name {
+          // max-width: 140px;
+          width: 100%;
+          text-align: right;
+          flex-shrink: 0;
+
+          @media (max-width: 1050px) {
+            text-align: center;
+          }
+        }
+
+        .field_value {
+          flex-grow: 1;
+          // text-align: left;
+          white-space: nowrap;
+          border: 1px solid var(--border-color);
+          border-radius: 12px;
+          padding: 0.5rem;
+        }
+      }
+    }
+    .my_account_history {
+      flex: 1 1 140px;
+      text-align: center;
+      white-space: nowrap;
+      max-width: 140px;
+      margin-left: auto;
+
+      @media (max-width: 1050px) {
+        margin: 0 auto;
+      }
     }
   }
 

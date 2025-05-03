@@ -1,17 +1,33 @@
 import React from 'react';
 import style from './myaccount.module.scss';
-import ButtonLink from '@/components/buttons/defaultButton/Button';
+import ButtonLink from '@/components/ui/buttons/defaultButton/Button';
 import Image from 'next/image';
+import CustomForm from '@/components/form/customForm/CustomForm';
 
-const MyAccount = () => {
+const MyAccount = ({ profile }: { profile: IProfile | null }) => {
   return (
     <div className={style.my_account_container}>
-      <div className={style.my_account_title}>MyAccount</div>
+      <div className={style.my_account_title}>My account</div>
       <div className={style.my_account_inner}>
         <div className={style.my_account_image}>
-          <Image src={'/me.png'} alt="" width={1000} height={1000} />
+          <Image src={'/me3.jpg'} alt="" width={1000} height={1000} />
         </div>
-        <div className={style.my_account_details}></div>
+        <div className={style.my_account_details}>
+          <div className={style.col}>
+            <span className={style.field_name}>nickname:</span>
+            <span className={style.field_value}>{'Alexandru Roventa'}</span>
+          </div>
+          <div className={style.col}>
+            <span className={style.field_name}>email:</span>
+            <span className={style.field_value}>
+              {'alex.roventa94@google.com'}
+            </span>
+          </div>
+          <div className={style.col}>
+            <span className={style.field_name}>nickname:</span>
+            <span className={style.field_value}>{'Alexandru Roventa'}</span>
+          </div>
+        </div>
         <div className={style.my_account_history}>
           <div className={style.text}>Thx for join us</div>
         </div>
@@ -24,6 +40,8 @@ const MyAccount = () => {
             isLink={true}
             href="/profile/myaccount/edit-myaccount"
             variant="none"
+            classname="mt-4"
+            ariaLabel="edit button"
           />
         </div>
       </div>
