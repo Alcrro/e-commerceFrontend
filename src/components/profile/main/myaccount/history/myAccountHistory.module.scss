@@ -1,0 +1,14 @@
+.my_account_history {
+  flex: 1 1 140px;
+  text-align: center;
+  white-space: nowrap;
+  max-width: 140px;
+  margin-left: auto;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+
+  @media (max-width: 1050px) {
+    margin: 0 auto;
+  }
+}
