@@ -17,7 +17,7 @@ const AuxTab = () => {
             </Link>
           </li>
           <li>
-            <Link href={'/profile/my-support'} className={style.icon_order}>
+            <Link href={'/profile/orders'} className={style.icon_order}>
               <div className={style.support_order}>order</div>
             </Link>
           </li>
