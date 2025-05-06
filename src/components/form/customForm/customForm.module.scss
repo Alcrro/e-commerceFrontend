@@ -1,0 +1,23 @@
+.label_group {
+  display: flex;
+  justify-content: space-between;
+  //   flex-direction: row;
+  align-items: center;
+  //   flex-wrap: wrap;
+  gap: 2rem;
+  white-space: nowrap;
+  margin-bottom: 10px;
+
+  label {
+    max-width: 120px;
+    width: 100%;
+    text-align: end;
+  }
+  .input_field {
+    flex: 1 0 200px;
+    padding: 0.5rem;
+    // max-width: 240px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+  }
+}

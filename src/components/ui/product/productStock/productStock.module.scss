@@ -1,0 +1,16 @@
+/* productStock.module.scss */
+.product_stock {
+  font-size: 14px;
+}
+
+.stock {
+  color: green; /* Default color */
+}
+
+.product_stock .out-of-stock {
+  color: red;
+}
+
+.product_stock .one-left {
+  color: orange; /* Highlight the "Only 1 product left" message */
+}

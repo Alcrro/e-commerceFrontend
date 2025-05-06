@@ -1,0 +1,17 @@
+/* 🔹 Delete from Cart */
+.delete_from_cart {
+  font-size: 0.875rem;
+  color: var(--danger-color);
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.2s;
+  background: var(--button-color-danger);
+  padding: 0.5rem;
+  border-radius: 12px;
+  text-align: center;
+  width: 100%;
+
+  &:hover {
+    color: var(--danger-hover);
+  }
+}

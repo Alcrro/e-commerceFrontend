@@ -1,0 +1,10 @@
+.add_to_cart_icon {
+  display: block;
+  padding: 0.25rem 0.75rem;
+
+  &::after {
+    content: '\F242';
+    font-family: 'Bootstrap-icons';
+    font-size: 20px;
+  }
+}

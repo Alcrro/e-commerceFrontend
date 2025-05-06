@@ -1,34 +1,29 @@
 import React from 'react';
 import style from './auxNavbar.module.scss';
-import ProductButton from '../buttons/productButton/ProductButton';
+import { secondDepartmentMenu } from '@/constants/secondDepartmentMenu';
+import AuxNavbarMenuResponsive from './AuxNavbarMenuResponsive';
+import AuxProductsMaiDepartmentList from './AuxProductsMaindepartmentList';
+import RootProductButton from './rootProductButton/RootProductButton';
+import { headers } from 'next/headers';
 
-import Link from 'next/link';
-import { departments } from '@/constants/departmentMenu';
+const AuxNavbar = async () => {
+  const pathname = (await headers()).get('x-pathname');
 
-const AuxNavbar = () => {
   return (
     <div className={style.aux_navbar_container}>
       <div className={style.aux_navbar_inner}>
-        <div className={style.department_menu}>
-          <div className={style.aux_navbar_product_button_container}>
-            <ProductButton />
-          </div>
-          <div className={style.product_department_list}>
-            <ul>
-              {departments.map((department) => (
-                <li key={department.id}>
-                  <Link
-                    href={`/${department.link} `}
-                    className={`${style.departmentItem} ${style[department.icon]}`}
-                  >
-                    <div className={`${style.text}`}>{department.name}</div>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div
+          className={`${style.department_menu} ${pathname === '/' ? style.is_exclude : style.is_not_excluded}`}
+        >
+          <RootProductButton />
+          {pathname !== '/' && (
+            <div className={style.products_main_department_list}>
+              <AuxProductsMaiDepartmentList />
+            </div>
+          )}
         </div>
-        <div className={style.aux_navbar_list_inner}></div>
+
+        <AuxNavbarMenuResponsive secondDepartmentMenu={secondDepartmentMenu} />
       </div>
     </div>
   );

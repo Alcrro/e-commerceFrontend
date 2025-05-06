@@ -1,0 +1,16 @@
+.search_box_inner {
+  input {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+
+    &:focus-within {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+      position: relative;
+      z-index: 9;
+    }
+  }
+}

@@ -1,0 +1,38 @@
+.aux_navbar_product_button_container {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  // background: var(--container-bg);
+  border-radius: 8px;
+  align-items: center;
+  position: relative;
+  max-width: 120px;
+  transition:
+    background 0.3s ease-in-out,
+    border-radius 0.3s ease-in-out;
+  padding: 0.5rem;
+  & > a {
+    padding-inline: 0;
+    width: unset;
+  }
+
+  &::before {
+    content: '\F479';
+    font-family: 'Bootstrap-icons';
+  }
+}
+.aux_navbar_product_button_container.home {
+  &:hover::after {
+    // display: none;
+    content: '';
+    position: absolute;
+    height: 8px;
+    top: 100%;
+    width: 100%;
+    background: var(--container-bg);
+  }
+  &:hover {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+}

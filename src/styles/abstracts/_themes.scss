@@ -1,0 +1,50 @@
+// abstracts/_themes.scss
+@use 'variables' as *;
+
+@mixin light-theme {
+  --background: #{$background-light};
+  --foreground: #{$foreground-light};
+  --text-color: #{$text-light};
+  --text-container-color: #{$text-container-light};
+  --container-bg: #{$container-light};
+  --box-shadow: #{$box-shadow-light};
+  --link-color: #{$light-link-color};
+  --link-hover: #{$light-link-hover};
+  --link-decoration-color: #{$link-decoration-color-light};
+  --text-span-color: #{$text-span-color-light};
+  --container-bg-between: #{$container-bg-between-light};
+  --container-bg-table: #{$container-bg-table-light};
+  --container-bg-active: #{$container-active-light-bg};
+  --border-color: #{$border-color-light};
+  --footer-background: #{$footer-bg-light};
+  --footer-text: #{$footer-text-light};
+  --footer-link: #{$footer-link-light};
+  --footer-border: #{$footer-border-light};
+  --footer-button-bg: #{$footer-button-bg-light};
+  --footer-button-hover: #{$footer-button-hover-light};
+  --success-color: #{$success-color};
+  --error-color: #{$error-color};
+}
+
+@mixin dark-theme {
+  --background: #{$background-dark};
+  --foreground: #{$foreground-dark};
+  --text-color: #{$text-dark};
+  --text-container-color: #{$text-container-dark};
+  --container-bg: #{$container-dark};
+  --box-shadow: #{$box-shadow-dark};
+  --link-color: #{$dark-link-color};
+  --link-hover: #{$dark-link-hover};
+  --link-decoration-color: #{$link-decoration-color-dark};
+  --text-span-color: #{$text-span-color-dark};
+  --container-bg-between: #{$container-bg-between-dark};
+  --container-bg-table: #{$container-bg-table-dark};
+  --container-bg-active: #{$container-active-dark-bg};
+  --border-color: #{$border-color-dark};
+  --footer-background: #{$footer-bg-dark};
+  --footer-text: #{$footer-text-dark};
+  --footer-link: #{$footer-link-dark};
+  --footer-border: #{$footer-border-dark};
+  --footer-button-bg: #{$footer-button-bg-dark};
+  --footer-button-hover: #{$footer-button-hover-dark};
+}

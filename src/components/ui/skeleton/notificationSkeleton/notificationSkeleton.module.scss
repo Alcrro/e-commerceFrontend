@@ -1,0 +1,56 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/themes' as *;
+
+.notificationSkeletonCard {
+  padding: $skeleton-spacing;
+  border-radius: $skeleton-radius;
+  background-color: var(--container-bg);
+  animation: pulse 2s infinite;
+  // margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+
+  .title {
+    // height: 1.2rem;w
+    width: 50%;
+    background-color: $skeleton-bg;
+    border-radius: $skeleton-radius;
+    // margin-bottom: 0.5rem;
+  }
+
+  .line {
+    // height: 0.75rem;
+    width: 100%;
+    // background-color: $skeleton-bg;
+    border-radius: $skeleton-radius;
+    // margin-bottom: 0.25rem;
+  }
+
+  .bottomLines {
+    display: flex;
+    justify-content: space-between;
+
+    .smallLine {
+      height: 1rem;
+      width: 20%;
+      background-color: $skeleton-bg;
+      border-radius: $skeleton-radius;
+
+      &.right {
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+// Simple pulse animation
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,77 @@
+// Light Mode
+$background-light: #f8f9fa;
+$foreground-light: #171717;
+$text-light: #000;
+$text-container-light: #fff;
+$container-light: #fff;
+$container-bg-between-light: #fcfcfc;
+$container-bg-table-light: #f0f8ff;
+$light-link-color: #007bff; // Light theme link color
+$light-link-hover: ($light-link-color, 10%); // Light theme hover effec
+$link-decoration-color-light: #007bff;
+$text-span-color-light: #222;
+$border-color-light: #ddd;
+$box-shadow-light: 0 4px 10px rgba(0, 0, 0, 0.1);
+$container-active-light-bg: rgba(
+  0,
+  123,
+  255,
+  0.2
+); // Light theme active background (Soft Blue)
+
+// Light Theme Colors
+$footer-bg-light: #f8f9fa;
+$footer-text-light: #1a1a1a;
+$footer-link-light: #007bff;
+$footer-border-light: #e0e0e0;
+$footer-button-bg-light: #f1f3f4;
+$footer-button-hover-light: #007bff;
+
+// Dark Mode
+$background-dark: #1a1a1a;
+$foreground-dark: #ededed;
+$text-dark: #fff;
+$text-container-dark: #000;
+$container-dark: #0e0d0d;
+$container-bg-between-dark: #141414;
+$container-bg-table-dark: #2a2a2a;
+$link-decoration-color-dark: #4c9aff;
+$dark-link-color: #4c9aff; // Dark theme link color
+$dark-link-hover: ($dark-link-color, 10%); // Dark theme hover effect
+$text-span-color-dark: #eee;
+$border-color-dark: #444;
+$box-shadow-dark: 0 4px 10px rgba(255, 255, 255, 0.1);
+$container-active-dark-bg: rgba(
+  0,
+  173,
+  181,
+  0.3
+); // Dark theme active background (Soft Teal)
+// Dark Theme Colors
+$footer-bg-dark: #121212;
+$footer-text-dark: #e0e0e0;
+$footer-link-dark: #bb86fc;
+$footer-border-dark: #333333;
+$footer-button-bg-dark: #282828;
+$footer-button-hover-dark: #bb86fc;
+
+$success-color: #28a745; // Green for success
+$error-color: #dc3545; // Red for error
+
+// Buttons
+$button-color-danger: rgb(194, 6, 6);
+$button-color-primary: #0070f3;
+
+// new beginning
+$font-family: 'Roboto', sans-serif;
+$transition: all 0.3s ease;
+$shadow-default: 0 4px 12px rgba(0, 0, 0, 0.08);
+$shadow-hover: 0 6px 15px rgba(0, 0, 0, 0.1);
+$color-high: #ff4d4d;
+$color-medium: #ffbc2d;
+$color-low: #34b55e;
+
+//Skeleton
+$skeleton-bg: #e2e8f0; // similar to Tailwind's bg-gray-300
+$skeleton-radius: 0.375rem; // rounded
+$skeleton-spacing: 1rem; // padding

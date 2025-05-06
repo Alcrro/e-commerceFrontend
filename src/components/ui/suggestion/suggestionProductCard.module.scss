@@ -1,0 +1,18 @@
+.suggestion_product {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  // max-width: 257px;
+  background-color: var(--container-bg);
+  border-radius: 12px;
+  padding: 0.5rem;
+  height: 100%;
+
+  .util_group {
+    position: relative;
+
+    form {
+      right: 0px;
+    }
+  }
+}

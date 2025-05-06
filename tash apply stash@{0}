@@ -1,0 +1,1193 @@
+[1mdiff --git a/src/components/auxNavbar/AuxNavbar.tsx b/src/components/auxNavbar/AuxNavbar.tsx[m
+[1mindex d5c9436..4496ae8 100644[m
+[1m--- a/src/components/auxNavbar/AuxNavbar.tsx[m
+[1m+++ b/src/components/auxNavbar/AuxNavbar.tsx[m
+[36m@@ -1,34 +1,29 @@[m
+ import React from 'react';[m
+ import style from './auxNavbar.module.scss';[m
+[31m-import ProductButton from '../buttons/productButton/ProductButton';[m
+[32m+[m[32mimport { secondDepartmentMenu } from '@/constants/secondDepartmentMenu';[m
+[32m+[m[32mimport AuxNavbarMenuResponsive from './AuxNavbarMenuResponsive';[m
+[32m+[m[32mimport AuxProductsMaiDepartmentList from './AuxProductsMaindepartmentList';[m
+[32m+[m[32mimport RootProductButton from './rootProductButton/RootProductButton';[m
+[32m+[m[32mimport { headers } from 'next/headers';[m
+ [m
+[31m-import Link from 'next/link';[m
+[31m-import { departments } from '@/constants/departmentMenu';[m
+[32m+[m[32mconst AuxNavbar = async () => {[m
+[32m+[m[32m  const pathname = (await headers()).get('x-pathname');[m
+ [m
+[31m-const AuxNavbar = () => {[m
+   return ([m
+     <div className={style.aux_navbar_container}>[m
+       <div className={style.aux_navbar_inner}>[m
+[31m-        <div className={style.department_menu}>[m
+[31m-          <div className={style.aux_navbar_product_button_container}>[m
+[31m-            <ProductButton />[m
+[31m-          </div>[m
+[31m-          <div className={style.product_department_list}>[m
+[31m-            <ul>[m
+[31m-              {departments.map((department) => ([m
+[31m-                <li key={department.id}>[m
+[31m-                  <Link[m
+[31m-                    href={`/${department.link} `}[m
+[31m-                    className={`${style.departmentItem} ${style[department.icon]}`}[m
+[31m-                  >[m
+[31m-                    <div className={`${style.text}`}>{department.name}</div>[m
+[31m-                  </Link>[m
+[31m-                </li>[m
+[31m-              ))}[m
+[31m-            </ul>[m
+[31m-          </div>[m
+[32m+[m[32m        <div[m
+[32m+[m[32m          className={`${style.department_menu} ${pathname === '/' ? style.is_exclude : style.is_not_excluded}`}[m
+[32m+[m[32m        >[m
+[32m+[m[32m          <RootProductButton />[m
+[32m+[m[32m          {pathname !== '/' && ([m
+[32m+[m[32m            <div className={style.products_main_department_list}>[m
+[32m+[m[32m              <AuxProductsMaiDepartmentList />[m
+[32m+[m[32m            </div>[m
+[32m+[m[32m          )}[m
+         </div>[m
+[31m-        <div className={style.aux_navbar_list_inner}></div>[m
+[32m+[m
+[32m+[m[32m        <AuxNavbarMenuResponsive secondDepartmentMenu={secondDepartmentMenu} />[m
+       </div>[m
+     </div>[m
+   );[m
+[1mdiff --git a/src/components/auxNavbar/AuxNavbarMenuResponsive.tsx b/src/components/auxNavbar/AuxNavbarMenuResponsive.tsx[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f99f633[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/auxNavbar/AuxNavbarMenuResponsive.tsx[m
+[36m@@ -0,0 +1,96 @@[m
+[32m+[m[32m'use client';[m
+[32m+[m
+[32m+[m[32mimport { useEffect, useRef, useState } from 'react';[m
+[32m+[m[32mimport Link from 'next/link';[m
+[32m+[m
+[32m+[m[32minterface Department {[m
+[32m+[m[32m  id: number;[m
+[32m+[m[32m  label: string;[m
+[32m+[m[32m  link: string;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32minterface Props {[m
+[32m+[m[32m  secondDepartmentMenu: Department[];[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mconst AuxNavbarMenuResponsive = ({ secondDepartmentMenu }: Props) => {[m
+[32m+[m[32m  const [visibleItems, setVisibleItems] =[m
+[32m+[m[32m    useState<Department[]>(secondDepartmentMenu);[m
+[32m+[m[32m  const [dropdownItems, setDropdownItems] = useState<Department[]>([]);[m
+[32m+[m[32m  const containerRef = useRef<HTMLUListElement>(null);[m
+[32m+[m
+[32m+[m[32m  useEffect(() => {[m
+[32m+[m[32m    const adjustMenu = () => {[m
+[32m+[m[32m      const container = containerRef.current;[m
+[32m+[m[32m      if (!container) return;[m
+[32m+[m
+[32m+[m[32m      const items = Array.from(container.children).filter([m
+[32m+[m[32m        (child) => child.tagName === 'LI'[m
+[32m+[m[32m      ) as HTMLLIElement[];[m
+[32m+[m
+[32m+[m[32m      if (items.length === 0) return;[m
+[32m+[m
+[32m+[m[32m      let lastItemIndex = secondDepartmentMenu.length;[m
+[32m+[m[32m      let firstRowTop = items[0].offsetTop;[m
+[32m+[m
+[32m+[m[32m      for (let i = 0; i < items.length; i++) {[m
+[32m+[m[32m        if (items[i].offsetTop > firstRowTop) {[m
+[32m+[m[32m          lastItemIndex = i;[m
+[32m+[m[32m          break;[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      setVisibleItems(secondDepartmentMenu.slice(0, lastItemIndex));[m
+[32m+[m[32m      setDropdownItems(secondDepartmentMenu.slice(lastItemIndex));[m
+[32m+[m[32m    };[m
+[32m+[m
+[32m+[m[32m    setTimeout(adjustMenu, 100); // Delay to allow styles to apply[m
+[32m+[m[32m    window.addEventListener('resize', adjustMenu);[m
+[32m+[m[32m    return () => window.removeEventListener('resize', adjustMenu);[m
+[32m+[m[32m  }, [secondDepartmentMenu]);[m
+[32m+[m
+[32m+[m[32m  return ([m
+[32m+[m[32m    <div className="w-full overflow-hidden">[m
+[32m+[m[32m      <ul[m
+[32m+[m[32m        ref={containerRef}[m
+[32m+[m[32m        className="flex flex-wrap align-bottom w-full items-center gap-1"[m
+[32m+[m[32m      >[m
+[32m+[m[32m        {visibleItems.map((item) => ([m
+[32m+[m[32m          <li[m
+[32m+[m[32m            key={item.id}[m
+[32m+[m[32m            className={`px-1 rounded whitespace-nowrap ${[m
+[32m+[m[32m              dropdownItems.includes(item) ? 'hidden' : ''[m
+[32m+[m[32m            }`}[m
+[32m+[m[32m          >[m
+[32m+[m[32m            <Link[m
+[32m+[m[32m              href={`/second-department/${item.link}`}[m
+[32m+[m[32m              className="flex text-white border border-transparent p-2 rounded-full hover:border-white"[m
+[32m+[m[32m            >[m
+[32m+[m[32m              {item.label}[m
+[32m+[m[32m            </Link>[m
+[32m+[m[32m          </li>[m
+[32m+[m[32m        ))}[m
+[32m+[m
+[32m+[m[32m        {dropdownItems.length > 0 && ([m
+[32m+[m[32m          <li className="relative">[m
+[32m+[m[32m            <button className="px-1 py-1 rounded">More ▼</button>[m
+[32m+[m[32m            <ul className="absolute z-10 top-full left-0 shadow-md mt-1 rounded w-40">[m
+[32m+[m[32m              {dropdownItems.map((item) => ([m
+[32m+[m[32m                <li key={item.id} className="px-2 hover:bg-gray-100">[m
+[32m+[m[32m                  <Link[m
+[32m+[m[32m                    href={`/second-department/${item.link}`}[m
+[32m+[m[32m                    className="block"[m
+[32m+[m[32m                  >[m
+[32m+[m[32m                    {item.label}[m
+[32m+[m[32m                  </Link>[m
+[32m+[m[32m                </li>[m
+[32m+[m[32m              ))}[m
+[32m+[m[32m            </ul>[m
+[32m+[m[32m          </li>[m
+[32m+[m[32m        )}[m
+[32m+[m[32m      </ul>[m
+[32m+[m[32m    </div>[m
+[32m+[m[32m  );[m
+[32m+[m[32m};[m
+[32m+[m
+[32m+[m[32mexport default AuxNavbarMenuResponsive;[m
+[1mdiff --git a/src/components/auxNavbar/AuxProductsMaindepartmentList.tsx b/src/components/auxNavbar/AuxProductsMaindepartmentList.tsx[m
+[1mnew file mode 100644[m
+[1mindex 0000000..fd4f54e[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/auxNavbar/AuxProductsMaindepartmentList.tsx[m
+[36m@@ -0,0 +1,78 @@[m
+[32m+[m[32m'use client';[m
+[32m+[m[32mimport React, { useEffect, useState } from 'react';[m
+[32m+[m[32mimport ElementsList from '../ui/elementsList/ElementsList';[m
+[32m+[m[32mimport {[m
+[32m+[m[32m  IMainDepartments,[m
+[32m+[m[32m  mainDepartment,[m
+[32m+[m[32m  mainSubDepartment,[m
+[32m+[m[32m} from '@/constants/mainDepartmentMenu';[m
+[32m+[m[32mimport style from './auxProductsMainDepartmentList.module.scss';[m
+[32m+[m[32mimport AuxMainDepartmentLink from './mainDepartmentLink/AuxMainDepartmentLink';[m
+[32m+[m[32mimport Link from 'next/link';[m
+[32m+[m[32mimport CarouselAd from '../ads/CarouselAd';[m
+[32m+[m[32mimport CarouselAdSkeleton from '../ui/skeleton/carouselAdSkeleton/CarouselAdSkeleton';[m
+[32m+[m
+[32m+[m[32mconst AuxProductsMainDepartmentList = ({ active }: { active?: boolean }) => {[m
+[32m+[m[32m  const [hoveredLink, setHoveredLink] = useState<string | null>(null);[m
+[32m+[m[32m  const [showAd, setShowAd] = useState(false);[m
+[32m+[m
+[32m+[m[32m  useEffect(() => {[m
+[32m+[m[32m    let timeout: NodeJS.Timeout;[m
+[32m+[m[32m    if (active) {[m
+[32m+[m[32m      timeout = setTimeout(() => setShowAd(true), 100);[m
+[32m+[m[32m    } else {[m
+[32m+[m[32m      setShowAd(false);[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }, [active]);[m
+[32m+[m[32m  const handleHover = (link: string) => {[m
+[32m+[m[32m    setHoveredLink(link);[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  const handleLeave = () => {[m
+[32m+[m[32m    setHoveredLink(null);[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  // Filter mainSubDepartment based on hovered link[m
+[32m+[m[32m  const filteredSubDepartments = mainSubDepartment.find([m
+[32m+[m[32m    (dept) => dept.title === hoveredLink[m
+[32m+[m[32m  );[m
+[32m+[m
+[32m+[m[32m  return ([m
+[32m+[m[32m    <div[m
+[32m+[m[32m      className={`${style.elements_list} ${active ? style.active : ''}`}[m
+[32m+[m[32m      onMouseLeave={handleLeave} // Reset hover state when leaving the whole component[m
+[32m+[m[32m    >[m
+[32m+[m[32m      <ElementsList<IMainDepartments>[m
+[32m+[m[32m        elements={mainDepartment}[m
+[32m+[m[32m        renderItem={(item: IMainDepartments) => ([m
+[32m+[m[32m          <AuxMainDepartmentLink[m
+[32m+[m[32m            item={item}[m
+[32m+[m[32m            active={active}[m
+[32m+[m[32m            key={item.id}[m
+[32m+[m[32m            onHover={handleHover}[m
+[32m+[m[32m          />[m
+[32m+[m[32m        )}[m
+[32m+[m[32m      />[m
+[32m+[m
+[32m+[m[32m      <div[m
+[32m+[m[32m        className={`${style.subDepartmentList_container} ${hoveredLink ? style.subDepActive : style.hidden}`}[m
+[32m+[m[32m        onMouseEnter={() => setHoveredLink(hoveredLink)} // Keep hovered state[m
+[32m+[m[32m        onMouseLeave={handleLeave}[m
+[32m+[m[32m      >[m
+[32m+[m[32m        <ul className={style.subDepartmentList_ul}>[m
+[32m+[m[32m          {filteredSubDepartments?.subDepartmentList.map((item) =>[m
+[32m+[m[32m            item.valuesOptions.map((values) => ([m
+[32m+[m[32m              <li key={values.id}>[m
+[32m+[m[32m                <Link href={`/products/${values.link}`}>{values.label}</Link>[m
+[32m+[m[32m              </li>[m
+[32m+[m[32m            ))[m
+[32m+[m[32m          )}[m
+[32m+[m[32m        </ul>[m
+[32m+[m[32m      </div>[m
+[32m+[m
+[32m+[m[32m      {active && showAd ? <CarouselAd /> : <CarouselAdSkeleton />}[m
+[32m+[m[32m    </div>[m
+[32m+[m[32m  );[m
+[32m+[m[32m};[m
+[32m+[m
+[32m+[m[32mexport default AuxProductsMainDepartmentList;[m
+[1mdiff --git a/src/components/auxNavbar/auxNavbar.module.scss b/src/components/auxNavbar/auxNavbar.module.scss[m
+[1mindex 4835f37..4bb2317 100644[m
+[1m--- a/src/components/auxNavbar/auxNavbar.module.scss[m
+[1m+++ b/src/components/auxNavbar/auxNavbar.module.scss[m
+[36m@@ -1,6 +1,6 @@[m
+ .aux_navbar_container {[m
+   display: block;[m
+[31m-  padding: 0.5rem;[m
+[32m+[m[32m  padding: 0.25rem;[m
+   background: linear-gradient([m
+     to right,[m
+     #ff1d25 5%,[m
+[36m@@ -9,10 +9,14 @@[m
+     #4359c7 55%,[m
+     #0082e6 70% 70%[m
+   );[m
+[31m-  border-radius: 12px;[m
+[32m+[m[32m  @media (min-width: 97rem) {[m
+[32m+[m[32m    border-radius: 12px;[m
+[32m+[m[32m  }[m
+ [m
+   .department_menu {[m
+     position: relative;[m
+[32m+[m[32m    background: var(--container-bg);[m
+[32m+[m[32m    border-radius: 8px;[m
+     // width: 100%;[m
+ [m
+     .aux_navbar_product_button_container {[m
+[36m@@ -38,113 +42,43 @@[m
+         content: '\F479';[m
+         font-family: 'Bootstrap-icons';[m
+       }[m
+[31m-      &:hover {[m
+[31m-        border-bottom-left-radius: 0px;[m
+[31m-        border-bottom-right-radius: 0px;[m
+[31m-      }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    &.is_not_excluded {[m
+       &:hover::after {[m
+         // display: none;[m
+         content: '';[m
+         position: absolute;[m
+[31m-        height: 8px;[m
+[32m+[m[32m        height: 12px;[m
+         top: 100%;[m
+         width: 100%;[m
+         background: var(--container-bg);[m
+       }[m
+[31m-    }[m
+[31m-[m
+[31m-    .product_department_list {[m
+[31m-      opacity: 0;[m
+[31m-      visibility: hidden;[m
+[31m-      position: absolute;[m
+[31m-      top: 48px;[m
+[31m-      left: 0;[m
+[31m-      background: var(--container-bg);[m
+[31m-      border-radius: 8px;[m
+[31m-      padding: 10px;[m
+[31m-      transition:[m
+[31m-        opacity 0.3s ease-in-out,[m
+[31m-        visibility 0.3s ease-in-out,[m
+[31m-        transform 0.3s ease-in-out;[m
+[31m-      transform: translateY(-10px);[m
+[31m-      z-index: 10;[m
+[31m-      width: max-content;[m
+[31m-[m
+[31m-      ul {[m
+[31m-        display: block;[m
+[31m-        padding: 0.5rem;[m
+[31m-[m
+[31m-        .departmentList {[m
+[31m-          list-style: none;[m
+[31m-          padding: 0;[m
+[31m-        }[m
+[31m-[m
+[31m-        .departmentItem {[m
+[31m-          display: flex;[m
+[31m-          align-items: center;[m
+[31m-          // padding: 10px;[m
+[31m-          padding-bottom: 5px;[m
+[31m-          font-size: 16px;[m
+[31m-          cursor: pointer;[m
+[31m-          position: relative;[m
+[31m-          // font-family: 'bootstrap-icons';[m
+[31m-[m
+[31m-          &::before {[m
+[31m-            content: '';[m
+[31m-            display: inline-block;[m
+[31m-            width: 20px;[m
+[31m-            height: 20px;[m
+[31m-            margin-right: 10px;[m
+[31m-            font-family: 'bootstrap-icons';[m
+[31m-          }[m
+[31m-[m
+[31m-          &:hover {[m
+[31m-            .text {[m
+[31m-              opacity: 0.6;[m
+[31m-            }[m
+[31m-          }[m
+[31m-        }[m
+[31m-[m
+[31m-        .laptop::before {[m
+[31m-          content: '\F109';[m
+[31m-        }[m
+[31m-        .desktop::before {[m
+[31m-          content: '\F108';[m
+[31m-        }[m
+[31m-        .tv::before {[m
+[31m-          content: '\F26C';[m
+[31m-        }[m
+[31m-        .fridge::before {[m
+[31m-          content: '\F2A5';[m
+[31m-        }[m
+[31m-        .gaming::before {[m
+[31m-          content: '\F11B';[m
+[31m-        }[m
+[31m-        .grocery::before {[m
+[31m-          content: '\F290';[m
+[31m-        }[m
+[31m-        .fashion::before {[m
+[31m-          content: '\F1B0';[m
+[31m-        }[m
+[31m-        .cosmetics::before {[m
+[31m-          content: '\F1A1';[m
+[31m-        }[m
+[31m-        .home::before {[m
+[31m-          content: '\F015';[m
+[31m-        }[m
+[31m-        .sport::before {[m
+[31m-          content: '\F1FC';[m
+[31m-        }[m
+[31m-        .car::before {[m
+[31m-          content: '\F1B9';[m
+[31m-        }[m
+[31m-        .toys::before {[m
+[31m-          content: '\F1F8';[m
+[31m-        }[m
+[32m+[m[32m      &:hover {[m
+[32m+[m[32m        border-bottom-left-radius: 0px;[m
+[32m+[m[32m        border-bottom-right-radius: 0px;[m
+       }[m
+     }[m
+   }[m
+[31m-  .department_menu:hover .product_department_list {[m
+[32m+[m[32m  .products_main_department_list {[m
+[32m+[m[32m    opacity: 0;[m
+[32m+[m[32m    visibility: hidden;[m
+[32m+[m[32m    position: absolute;[m
+[32m+[m[32m    top: 44px;[m
+[32m+[m[32m    left: 0;[m
+[32m+[m[32m    background: var(--container-bg);[m
+[32m+[m[32m    border-radius: 8px;[m
+[32m+[m[32m    padding: 10px;[m
+[32m+[m[32m    transition:[m
+[32m+[m[32m      opacity 0.3s ease-in-out,[m
+[32m+[m[32m      visibility 0.3s ease-in-out,[m
+[32m+[m[32m      transform 0.3s ease-in-out;[m
+[32m+[m[32m    transform: translateY(-10px);[m
+[32m+[m[32m    z-index: 10;[m
+[32m+[m[32m    width: 340px;[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  .department_menu:hover .products_main_department_list {[m
+     opacity: 1;[m
+     visibility: visible;[m
+     transform: translateY(0);[m
+[36m@@ -156,10 +90,9 @@[m
+       display: block;[m
+       content: '';[m
+       position: absolute;[m
+[31m-      height: 8px;[m
+[32m+[m[32m      height: 12px;[m
+       top: 100%;[m
+       width: 100%;[m
+[31m-[m
+       background: var(--container-bg);[m
+     }[m
+   }[m
+[36m@@ -168,9 +101,27 @@[m
+     gap: 6px;[m
+     align-items: center;[m
+     .aux_navbar_list_inner {[m
+[32m+[m[32m      display: flex;[m
+[32m+[m[32m      flex-wrap: wrap;[m
+[32m+[m
+       ul {[m
+         display: flex;[m
+[32m+[m[32m        flex-wrap: wrap;[m
+         gap: 4px;[m
+[32m+[m
+[32m+[m[32m        .aux_navbar_li {[m
+[32m+[m[32m          white-space: nowrap;[m
+[32m+[m
+[32m+[m[32m          .aux_navbar_a {[m
+[32m+[m[32m            border: 1px solid transparent;[m
+[32m+[m[32m            padding: 0.75rem;[m
+[32m+[m[32m            border-radius: 20px;[m
+[32m+[m
+[32m+[m[32m            &:hover {[m
+[32m+[m[32m              border-color: #fff;[m
+[32m+[m[32m            }[m
+[32m+[m[32m          }[m
+[32m+[m[32m        }[m
+       }[m
+     }[m
+   }[m
+[1mdiff --git a/src/components/auxNavbar/auxProductsMainDepartmentList.module.scss b/src/components/auxNavbar/auxProductsMainDepartmentList.module.scss[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b72548c[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/auxNavbar/auxProductsMainDepartmentList.module.scss[m
+[36m@@ -0,0 +1,163 @@[m
+[32m+[m[32m.elements_list {[m
+[32m+[m[32m  // width: fit-content;[m
+[32m+[m[32m  position: relative;[m
+[32m+[m
+[32m+[m[32m  &.active {[m
+[32m+[m[32m    display: flex;[m
+[32m+[m[32m    // padding: 0.5rem;[m
+[32m+[m[32m    border-bottom-left-radius: 12px;[m
+[32m+[m[32m    @media (min-width: 97rem) {[m
+[32m+[m[32m      border-top-left-radius: 12px;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    .elementItem::after {[m
+[32m+[m[32m      content: unset;[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m[32m  ul {[m
+[32m+[m[32m    padding: 10px;[m
+[32m+[m[32m    background: var(--container-bg);[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .elementItem {[m
+[32m+[m[32m    display: flex;[m
+[32m+[m[32m    align-items: center;[m
+[32m+[m[32m    // padding: 10px;[m
+[32m+[m[32m    padding-bottom: 5px;[m
+[32m+[m[32m    font-size: 16px;[m
+[32m+[m[32m    cursor: pointer;[m
+[32m+[m[32m    position: relative;[m
+[32m+[m
+[32m+[m[32m    // font-family: 'bootstrap-icons';[m
+[32m+[m
+[32m+[m[32m    &::before,[m
+[32m+[m[32m    &::after {[m
+[32m+[m[32m      content: '';[m
+[32m+[m[32m      display: inline-block;[m
+[32m+[m[32m      width: 20px;[m
+[32m+[m[32m      height: 20px;[m
+[32m+[m[32m      margin-right: 10px;[m
+[32m+[m[32m      font-family: 'bootstrap-icons';[m
+[32m+[m[32m    }[m
+[32m+[m[32m    &::after {[m
+[32m+[m[32m      content: '\F285';[m
+[32m+[m[32m      margin-left: auto;[m
+[32m+[m[32m      margin-right: unset;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    &:hover {[m
+[32m+[m[32m      .text {[m
+[32m+[m[32m        opacity: 0.6;[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    &:hover::after {[m
+[32m+[m[32m      opacity: 0.6;[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  .laptop::before {[m
+[32m+[m[32m    content: '\F109';[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .desktop::before {[m
+[32m+[m[32m    content: '\F108';[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .tv::before {[m
+[32m+[m[32m    content: '\F26C';[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .fridge::before {[m
+[32m+[m[32m    content: '\F2A5';[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .gaming::before {[m
+[32m+[m[32m    content: '\F11B';[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .grocery::before {[m
+[32m+[m[32m    content: '\F290';[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .fashion::before {[m
+[32m+[m[32m    content: '\F1B0';[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .cosmetics::before {[m
+[32m+[m[32m    content: '\F1A1';[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .home::before {[m
+[32m+[m[32m    content: '\F015';[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .sport::before {[m
+[32m+[m[32m    content: '\F1FC';[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .car::before {[m
+[32m+[m[32m    content: '\F1B9';[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .toys::before {[m
+[32m+[m[32m    content: '\F1F8';[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  &:not(.active) {[m
+[32m+[m[32m    .subDepartmentList_container {[m
+[32m+[m[32m      position: absolute;[m
+[32m+[m[32m      top: -10px;[m
+[32m+[m[32m      height: 100%;[m
+[32m+[m[32m      left: 320px;[m
+[32m+[m[32m      background: var(--container-bg);[m
+[32m+[m[32m      min-width: 74rem;[m
+[32m+[m[32m      // min-width: 100%;[m
+[32m+[m[32m      padding: 0.5rem;[m
+[32m+[m
+[32m+[m[32m      .subDepartmentList_ul {[m
+[32m+[m[32m        position: relative;[m
+[32m+[m[32m        display: flex;[m
+[32m+[m[32m        flex-wrap: wrap; // Ensure wrapping[m
+[32m+[m[32m        gap: 10px;[m
+[32m+[m[32m        list-style: none;[m
+[32m+[m[32m        padding: 0;[m
+[32m+[m
+[32m+[m[32m        li {[m
+[32m+[m[32m          flex: 1 0 200px;[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .subDepartmentList_container {[m
+[32m+[m[32m    position: absolute;[m
+[32m+[m[32m    top: 0px;[m
+[32m+[m[32m    left: 293px; // Align next to main department[m
+[32m+[m[32m    background: var(--container-bg);[m
+[32m+[m[32m    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);[m
+[32m+[m[32m    padding: 10px 0;[m
+[32m+[m[32m    z-index: 20;[m
+[32m+[m[32m    width: calc(100% - 293px);[m
+[32m+[m[32m    height: 100%;[m
+[32m+[m
+[32m+[m[32m    .subDepartmentList_ul {[m
+[32m+[m[32m      position: relative;[m
+[32m+[m[32m      display: flex;[m
+[32m+[m[32m      flex-wrap: wrap; // Ensure wrapping[m
+[32m+[m[32m      gap: 10px;[m
+[32m+[m[32m      list-style: none;[m
+[32m+[m[32m      padding: 0;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    &.active {[m
+[32m+[m[32m      display: block;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    &.hidden {[m
+[32m+[m[32m      display: none;[m
+[32m+[m[32m      visibility: hidden;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    li {[m
+[32m+[m[32m      flex: 1 1 200px;[m
+[32m+[m[32m      white-space: nowrap;[m
+[32m+[m[32m      @media (max-width: 1024px) {[m
+[32m+[m[32m        flex: 1 1 calc(50% - 10px); // 2 items per row on tablets[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      @media (max-width: 768px) {[m
+[32m+[m[32m        flex: 1 1 100%; // 1 item per row on small screens[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @media (max-width: 768px) {[m
+[32m+[m[32m      position: static; // Remove absolute positioning for stacking[m
+[32m+[m[32m      width: 100%; // Ensure full width on mobile[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/components/auxNavbar/mainDepartmentLink/AuxMainDepartmentLink.tsx b/src/components/auxNavbar/mainDepartmentLink/AuxMainDepartmentLink.tsx[m
+[1mnew file mode 100644[m
+[1mindex 0000000..d44684c[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/auxNavbar/mainDepartmentLink/AuxMainDepartmentLink.tsx[m
+[36m@@ -0,0 +1,28 @@[m
+[32m+[m[32mimport { IMainDepartments } from '@/constants/mainDepartmentMenu';[m
+[32m+[m[32mimport Link from 'next/link';[m
+[32m+[m[32mimport React, { ReactNode } from 'react';[m
+[32m+[m[32mimport style from './auxMainDepartmentLink.module.scss';[m
+[32m+[m[32mconst AuxMainDepartmentLink = <T,>({[m
+[32m+[m[32m  item,[m
+[32m+[m[32m  active,[m
+[32m+[m[32m  onHover,[m
+[32m+[m[32m  renderItem,[m
+[32m+[m[32m}: {[m
+[32m+[m[32m  item: IMainDepartments;[m
+[32m+[m[32m  active: boolean | undefined;[m
+[32m+[m[32m  onHover: (link: string) => void;[m
+[32m+[m[32m  renderItem?: (item: T) => ReactNode;[m
+[32m+[m[32m}) => {[m
+[32m+[m[32m  return ([m
+[32m+[m[32m    <Link[m
+[32m+[m[32m      href={`/main-department/${item.link}`}[m
+[32m+[m[32m      className={`${style.elementItem} ${active && style.isActive}  ${item.icon && style[item.icon]}`}[m
+[32m+[m[32m    >[m
+[32m+[m[32m      <div className={style.text} onMouseEnter={() => onHover(item.link)}>[m
+[32m+[m[32m        {item.name}[m
+[32m+[m[32m      </div>[m
+[32m+[m[32m    </Link>[m
+[32m+[m[32m  );[m
+[32m+[m[32m};[m
+[32m+[m
+[32m+[m[32mexport default AuxMainDepartmentLink;[m
+[1mdiff --git a/src/components/auxNavbar/mainDepartmentLink/auxMainDepartmentLink.module.scss b/src/components/auxNavbar/mainDepartmentLink/auxMainDepartmentLink.module.scss[m
+[1mnew file mode 100644[m
+[1mindex 0000000..9d4116a[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/auxNavbar/mainDepartmentLink/auxMainDepartmentLink.module.scss[m
+[36m@@ -0,0 +1,82 @@[m
+[32m+[m[32m.elementItem {[m
+[32m+[m[32m  display: flex;[m
+[32m+[m[32m  align-items: center;[m
+[32m+[m[32m  // padding: 10px;[m
+[32m+[m[32m  padding-bottom: 5px;[m
+[32m+[m[32m  font-size: 16px;[m
+[32m+[m[32m  cursor: pointer;[m
+[32m+[m[32m  position: relative;[m
+[32m+[m
+[32m+[m[32m  .text {[m
+[32m+[m[32m    display: block;[m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m    white-space: nowrap;[m
+[32m+[m[32m  }[m
+[32m+[m[32m  // font-family: 'bootstrap-icons';[m
+[32m+[m
+[32m+[m[32m  &::before,[m
+[32m+[m[32m  &::after {[m
+[32m+[m[32m    content: '';[m
+[32m+[m[32m    display: inline-block;[m
+[32m+[m[32m    width: 20px;[m
+[32m+[m[32m    height: 20px;[m
+[32m+[m[32m    margin-right: 10px;[m
+[32m+[m[32m    font-family: 'bootstrap-icons';[m
+[32m+[m[32m  }[m
+[32m+[m[32m  &::after {[m
+[32m+[m[32m    content: '\F285';[m
+[32m+[m[32m    margin-left: auto;[m
+[32m+[m[32m    margin-right: unset;[m
+[32m+[m[32m  }[m
+[32m+[m[32m  &:hover {[m
+[32m+[m[32m    .text {[m
+[32m+[m[32m      opacity: 0.6;[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  &:hover::after {[m
+[32m+[m[32m    opacity: 0.6;[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+[32m+[m[32m.elementItem.isActive {[m
+[32m+[m[32m  &::after {[m
+[32m+[m[32m    content: unset;[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.laptop::before {[m
+[32m+[m[32m  content: '\F109';[m
+[32m+[m[32m}[m
+[32m+[m[32m.desktop::before {[m
+[32m+[m[32m  content: '\F108';[m
+[32m+[m[32m}[m
+[32m+[m[32m.tv::before {[m
+[32m+[m[32m  content: '\F26C';[m
+[32m+[m[32m}[m
+[32m+[m[32m.fridge::before {[m
+[32m+[m[32m  content: '\F2A5';[m
+[32m+[m[32m}[m
+[32m+[m[32m.gaming::before {[m
+[32m+[m[32m  content: '\F11B';[m
+[32m+[m[32m}[m
+[32m+[m[32m.grocery::before {[m
+[32m+[m[32m  content: '\F290';[m
+[32m+[m[32m}[m
+[32m+[m[32m.fashion::before {[m
+[32m+[m[32m  content: '\F1B0';[m
+[32m+[m[32m}[m
+[32m+[m[32m.cosmetics::before {[m
+[32m+[m[32m  content: '\F1A1';[m
+[32m+[m[32m}[m
+[32m+[m[32m.home::before {[m
+[32m+[m[32m  content: '\F015';[m
+[32m+[m[32m}[m
+[32m+[m[32m.sport::before {[m
+[32m+[m[32m  content: '\F1FC';[m
+[32m+[m[32m}[m
+[32m+[m[32m.car::before {[m
+[32m+[m[32m  content: '\F1B9';[m
+[32m+[m[32m}[m
+[32m+[m[32m.toys::before {[m
+[32m+[m[32m  content: '\F1F8';[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/components/auxNavbar/rootProductButton/RootProductButton.tsx b/src/components/auxNavbar/rootProductButton/RootProductButton.tsx[m
+[1mnew file mode 100644[m
+[1mindex 0000000..3aa0715[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/auxNavbar/rootProductButton/RootProductButton.tsx[m
+[36m@@ -0,0 +1,18 @@[m
+[32m+[m[32mimport ProductButton from '@/components/ui/buttons/productButton/ProductButton';[m
+[32m+[m[32mimport React from 'react';[m
+[32m+[m[32mimport style from './rootProductButton.module.scss';[m
+[32m+[m[32mimport { headers } from 'next/headers';[m
+[32m+[m
+[32m+[m[32mconst RootProductButton = async () => {[m
+[32m+[m[32m  const pathname = (await headers()).get('x-pathname');[m
+[32m+[m
+[32m+[m[32m  return ([m
+[32m+[m[32m    <div[m
+[32m+[m[32m      className={`${style.aux_navbar_product_button_container} ${pathname !== '/' && style.home}`}[m
+[32m+[m[32m    >[m
+[32m+[m[32m      <ProductButton />[m
+[32m+[m[32m    </div>[m
+[32m+[m[32m  );[m
+[32m+[m[32m};[m
+[32m+[m
+[32m+[m[32mexport default RootProductButton;[m
+[1mdiff --git a/src/components/auxNavbar/rootProductButton/rootProductButton.module.scss b/src/components/auxNavbar/rootProductButton/rootProductButton.module.scss[m
+[1mnew file mode 100644[m
+[1mindex 0000000..4814aa2[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/auxNavbar/rootProductButton/rootProductButton.module.scss[m
+[36m@@ -0,0 +1,38 @@[m
+[32m+[m[32m.aux_navbar_product_button_container {[m
+[32m+[m[32m  display: flex;[m
+[32m+[m[32m  gap: 4px;[m
+[32m+[m[32m  justify-content: center;[m
+[32m+[m[32m  // background: var(--container-bg);[m
+[32m+[m[32m  border-radius: 8px;[m
+[32m+[m[32m  align-items: center;[m
+[32m+[m[32m  position: relative;[m
+[32m+[m[32m  max-width: 120px;[m
+[32m+[m[32m  transition:[m
+[32m+[m[32m    background 0.3s ease-in-out,[m
+[32m+[m[32m    border-radius 0.3s ease-in-out;[m
+[32m+[m[32m  padding: 0.5rem;[m
+[32m+[m[32m  & > a {[m
+[32m+[m[32m    padding-inline: 0;[m
+[32m+[m[32m    width: unset;[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  &::before {[m
+[32m+[m[32m    content: '\F479';[m
+[32m+[m[32m    font-family: 'Bootstrap-icons';[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+[32m+[m[32m.aux_navbar_product_button_container.home {[m
+[32m+[m[32m  &:hover::after {[m
+[32m+[m[32m    // display: none;[m
+[32m+[m[32m    content: '';[m
+[32m+[m[32m    position: absolute;[m
+[32m+[m[32m    height: 8px;[m
+[32m+[m[32m    top: 100%;[m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m    background: var(--container-bg);[m
+[32m+[m[32m  }[m
+[32m+[m[32m  &:hover {[m
+[32m+[m[32m    border-bottom-left-radius: 0px;[m
+[32m+[m[32m    border-bottom-right-radius: 0px;[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/components/footer/Footer.tsx b/src/components/footer/Footer.tsx[m
+[1mindex 09379a2..47557d0 100644[m
+[1m--- a/src/components/footer/Footer.tsx[m
+[1m+++ b/src/components/footer/Footer.tsx[m
+[36m@@ -1,9 +1,18 @@[m
+[31m-import React from 'react'[m
+[32m+[m[32mimport React from 'react';[m
+[32m+[m[32mimport HelpList from './helpList/HelpList';[m
+[32m+[m[32mimport QuestionsAbout from './questionsAbout/QuestionsAbout';[m
+ [m
+ const Footer = () => {[m
+   return ([m
+[31m-    <div>Footer</div>[m
+[31m-  )[m
+[31m-}[m
+[32m+[m[32m    <footer className="w-full mt-auto">[m
+[32m+[m[32m      <section>[m
+[32m+[m[32m        <QuestionsAbout />[m
+[32m+[m[32m      </section>[m
+[32m+[m[32m      <section>[m
+[32m+[m[32m        <HelpList />[m
+[32m+[m[32m      </section>[m
+[32m+[m[32m    </footer>[m
+[32m+[m[32m  );[m
+[32m+[m[32m};[m
+ [m
+[31m-export default Footer[m
+\ No newline at end of file[m
+[32m+[m[32mexport default Footer;[m
+[1mdiff --git a/src/components/footer/helpList/HelpList.tsx b/src/components/footer/helpList/HelpList.tsx[m
+[1mnew file mode 100644[m
+[1mindex 0000000..bd108b7[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/footer/helpList/HelpList.tsx[m
+[36m@@ -0,0 +1,21 @@[m
+[32m+[m[32mimport React from 'react';[m
+[32m+[m[32mimport style from './helpList.module.scss';[m
+[32m+[m[32mimport {[m
+[32m+[m[32m  helpListData,[m
+[32m+[m[32m  IHelpListData,[m
+[32m+[m[32m} from '@/constants/footer/helpList/helpList';[m
+[32m+[m[32mimport QuestionsList from '../questionsAbout/QuestionsList';[m
+[32m+[m
+[32m+[m[32mconst HelpList = () => {[m
+[32m+[m[32m  const transformedData = helpListData.map((item: IHelpListData) => ({[m
+[32m+[m[32m    title: item.title,[m
+[32m+[m[32m    options: item.options || [], // Ensure options is always an array[m
+[32m+[m[32m  }));[m
+[32m+[m[32m  return ([m
+[32m+[m[32m    <div className={style.help_list_container}>[m
+[32m+[m[32m      <QuestionsList items={transformedData} used={true} />[m
+[32m+[m[32m    </div>[m
+[32m+[m[32m  );[m
+[32m+[m[32m};[m
+[32m+[m
+[32m+[m[32mexport default HelpList;[m
+[1mdiff --git a/src/components/footer/helpList/helpList.module.scss b/src/components/footer/helpList/helpList.module.scss[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b0c36cb[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/footer/helpList/helpList.module.scss[m
+[36m@@ -0,0 +1,46 @@[m
+[32m+[m[32m@use '@/styles/abstracts/mixins' as *;[m
+[32m+[m
+[32m+[m[32m.help_list_container {[m
+[32m+[m[32m  // position: absolute;[m
+[32m+[m[32m  background: var(--footer-background);[m
+[32m+[m[32m  color: var(--footer-text);[m
+[32m+[m[32m  padding: 1rem;[m
+[32m+[m[32m  margin-block: 10px;[m
+[32m+[m
+[32m+[m[32m  @media (min-width: 820px) {[m
+[32m+[m[32m    .help_list {[m
+[32m+[m[32m      @include flex(flex-start, row, center, 1rem);[m
+[32m+[m[32m      flex-wrap: wrap;[m
+[32m+[m[32m      position: relative;[m
+[32m+[m[32m      max-width: 97rem;[m
+[32m+[m[32m      width: 100%;[m
+[32m+[m[32m      margin: 0 auto;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    .help_list_li {[m
+[32m+[m[32m      display: block;[m
+[32m+[m[32m      flex: 1 0 220px;[m
+[32m+[m[32m      text-align: center;[m
+[32m+[m
+[32m+[m[32m      .help_list_title {[m
+[32m+[m[32m        font-size: 1.2em;[m
+[32m+[m
+[32m+[m[32m        &::first-letter {[m
+[32m+[m[32m          text-transform: uppercase;[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      a {[m
+[32m+[m[32m        display: block;[m
+[32m+[m[32m        width: fit-content;[m
+[32m+[m[32m        margin: 0 auto;[m
+[32m+[m[32m        color: var(--footer-link);[m
+[32m+[m[32m        font-size: small;[m
+[32m+[m
+[32m+[m[32m        &:hover {[m
+[32m+[m[32m          color: var(--footer-button-hover);[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/components/footer/questionsAbout/QuestionsAbout.tsx b/src/components/footer/questionsAbout/QuestionsAbout.tsx[m
+[1mnew file mode 100644[m
+[1mindex 0000000..382c45e[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/footer/questionsAbout/QuestionsAbout.tsx[m
+[36m@@ -0,0 +1,20 @@[m
+[32m+[m[32mimport React from 'react';[m
+[32m+[m[32mimport QuestionsList from './QuestionsList';[m
+[32m+[m[32mimport ContainerLayout from '@/components/layouts/mainLayout/ContainerLayout';[m
+[32m+[m[32mimport style from './questionAbout.module.scss';[m
+[32m+[m[32mimport { IQuestionList, questionsList } from '@/constants/footer/questionsList';[m
+[32m+[m[32mconst QuestionsAbout = () => {[m
+[32m+[m[32m  const transformedData = questionsList.map((item: IQuestionList) => ({[m
+[32m+[m[32m    title: item.title,[m
+[32m+[m[32m    content: item.message,[m
+[32m+[m[32m  }));[m
+[32m+[m[32m  return ([m
+[32m+[m[32m    <ContainerLayout>[m
+[32m+[m[32m      <div className={style.question_about_container}>[m
+[32m+[m[32m        <QuestionsList items={transformedData} used={false} />[m
+[32m+[m[32m      </div>[m
+[32m+[m[32m    </ContainerLayout>[m
+[32m+[m[32m  );[m
+[32m+[m[32m};[m
+[32m+[m
+[32m+[m[32mexport default QuestionsAbout;[m
+[1mdiff --git a/src/components/footer/questionsAbout/QuestionsList.tsx b/src/components/footer/questionsAbout/QuestionsList.tsx[m
+[1mnew file mode 100644[m
+[1mindex 0000000..9940bfc[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/footer/questionsAbout/QuestionsList.tsx[m
+[36m@@ -0,0 +1,82 @@[m
+[32m+[m[32m'use client';[m
+[32m+[m[32mimport React, { useState } from 'react';[m
+[32m+[m[32mimport style from './questionsList.module.scss';[m
+[32m+[m[32mimport Link from 'next/link';[m
+[32m+[m[32mimport generateLinkFromText from '@/utils/generLinkFromText';[m
+[32m+[m
+[32m+[m[32minterface QuestionItem {[m
+[32m+[m[32m  title: string;[m
+[32m+[m[32m  content?: string;[m
+[32m+[m[32m  options?: string[];[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32minterface QuestionsListProps {[m
+[32m+[m[32m  items: QuestionItem[];[m
+[32m+[m[32m  used: boolean;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mconst QuestionsList: React.FC<QuestionsListProps> = ({ items, used }) => {[m
+[32m+[m[32m  const [activeIndex, setActiveIndex] = useState<number | null>(null);[m
+[32m+[m
+[32m+[m[32m  const toggleActive = (index: number) => {[m
+[32m+[m[32m    setActiveIndex(activeIndex === index ? null : index);[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  return ([m
+[32m+[m[32m    <div className={`${style.list_container} ${used ? style.isUsed : ''}`}>[m
+[32m+[m[32m      <div className={style.list_inner}>[m
+[32m+[m[32m        <ul className={style.list_inner_ul}>[m
+[32m+[m[32m          {items.map((item, index) => {[m
+[32m+[m[32m            const isActive = activeIndex === index;[m
+[32m+[m
+[32m+[m[32m            return ([m
+[32m+[m[32m              <li key={index}>[m
+[32m+[m[32m                <h3[m
+[32m+[m[32m                  className={isActive ? style.isActive : ''}[m
+[32m+[m[32m                  onClick={() => toggleActive(index)}[m
+[32m+[m[32m                >[m
+[32m+[m[32m                  <Link[m
+[32m+[m[32m                    href={[m
+[32m+[m[32m                      !isActive[m
+[32m+[m[32m                        ? `#${generateLinkFromText(item.title.toLowerCase())}`[m
+[32m+[m[32m                        : '#'[m
+[32m+[m[32m                    }[m
+[32m+[m[32m                    scroll={false}[m
+[32m+[m[32m                  >[m
+[32m+[m[32m                    {item.title}[m
+[32m+[m[32m                  </Link>[m
+[32m+[m[32m                </h3>[m
+[32m+[m[32m                {item.content ? ([m
+[32m+[m[32m                  <div className={isActive ? style.active : style.hidden}>[m
+[32m+[m[32m                    <p>{item.content}</p>[m
+[32m+[m[32m                  </div>[m
+[32m+[m[32m                ) : ([m
+[32m+[m[32m                  Array.isArray(item.options) &&[m
+[32m+[m[32m                  item.options.length > 0 && ([m
+[32m+[m[32m                    <ul className={style.list_options}>[m
+[32m+[m[32m                      {item.options.map((option, optIndex) => ([m
+[32m+[m[32m                        <li[m
+[32m+[m[32m                          key={optIndex}[m
+[32m+[m[32m                          className={isActive ? style.active : style.hidden}[m
+[32m+[m[32m                        >[m
+[32m+[m[32m                          <Link[m
+[32m+[m[32m                            href={`/help/${generateLinkFromText(option.toLocaleLowerCase())}`}[m
+[32m+[m[32m                            className="block w-full"[m
+[32m+[m[32m                          >[m
+[32m+[m[32m                            {option}[m
+[32m+[m[32m                          </Link>[m
+[32m+[m[32m                        </li>[m
+[32m+[m[32m                      ))}[m
+[32m+[m[32m                    </ul>[m
+[32m+[m[32m                  )[m
+[32m+[m[32m                )}[m
+[32m+[m[32m              </li>[m
+[32m+[m[32m            );[m
+[32m+[m[32m          })}[m
+[32m+[m[32m        </ul>[m
+[32m+[m[32m      </div>[m
+[32m+[m[32m    </div>[m
+[32m+[m[32m  );[m
+[32m+[m[32m};[m
+[32m+[m
+[32m+[m[32mexport default QuestionsList;[m
+[1mdiff --git a/src/components/footer/questionsAbout/questionAbout.module.scss b/src/components/footer/questionsAbout/questionAbout.module.scss[m
+[1mnew file mode 100644[m
+[1mindex 0000000..6d70f2e[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/footer/questionsAbout/questionAbout.module.scss[m
+[36m@@ -0,0 +1,7 @@[m
+[32m+[m[32m.question_about_container {[m
+[32m+[m[32m  display: block;[m
+[32m+[m[32m  padding: 2rem 1rem;[m
+[32m+[m[32m  background: var(--container-bg-between);[m
+[32m+[m[32m  border-top-right-radius: 12px;[m
+[32m+[m[32m  border-top-left-radius: 12px;[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/components/footer/questionsAbout/questionsList.module.scss b/src/components/footer/questionsAbout/questionsList.module.scss[m
+[1mnew file mode 100644[m
+[1mindex 0000000..03a8955[m
+[1m--- /dev/null[m
+[1m+++ b/src/components/footer/questionsAbout/questionsList.module.scss[m
+[36m@@ -0,0 +1,142 @@[m
+[32m+[m[32m@use '@/styles/abstracts/mixins' as *;[m
+[32m+[m
+[32m+[m[32m.list_container {[m
+[32m+[m[32m  &.isUsed {[m
+[32m+[m[32m    .list_inner {[m
+[32m+[m[32m      @media (min-width: 640px) {[m
+[32m+[m[32m        .list_inner_ul {[m
+[32m+[m[32m          @include flex(flex-start, row, center, 1rem);[m
+[32m+[m
+[32m+[m[32m          flex-wrap: wrap;[m
+[32m+[m[32m          text-align: center;[m
+[32m+[m[32m          max-width: 97rem;[m
+[32m+[m[32m          width: 100%;[m
+[32m+[m[32m          margin: 0 auto;[m
+[32m+[m
+[32m+[m[32m          li {[m
+[32m+[m[32m            @include flex(flex-start, column, center, 0);[m
+[32m+[m
+[32m+[m[32m            flex: 1 0 240px;[m
+[32m+[m[32m            border-bottom: unset;[m
+[32m+[m[32m            width: 100%;[m
+[32m+[m
+[32m+[m[32m            h3 {[m
+[32m+[m[32m              display: block;[m
+[32m+[m[32m              font-size: 20px;[m
+[32m+[m[32m              pointer-events: none;[m
+[32m+[m[32m              margin: 0 auto;[m
+[32m+[m[32m              color: var(--footer-text);[m
+[32m+[m
+[32m+[m[32m              &::first-letter {[m
+[32m+[m[32m                text-transform: capitalize;[m
+[32m+[m[32m              }[m
+[32m+[m[32m              display: block;[m
+[32m+[m[32m              &:after {[m
+[32m+[m[32m                content: unset;[m
+[32m+[m[32m              }[m
+[32m+[m[32m            }[m
+[32m+[m
+[32m+[m[32m            .hidden {[m
+[32m+[m[32m              max-height: 100%;[m
+[32m+[m[32m              opacity: 1;[m
+[32m+[m[32m            }[m
+[32m+[m[32m            .list_options {[m
+[32m+[m[32m              margin: 0 auto;[m
+[32m+[m
+[32m+[m[32m              a {[m
+[32m+[m[32m                display: block;[m
+[32m+[m[32m                width: fit-content;[m
+[32m+[m[32m                color: var(--footer-link);[m
+[32m+[m
+[32m+[m[32m                &:hover {[m
+[32m+[m[32m                  color: var(--link-hover);[m
+[32m+[m[32m                }[m
+[32m+[m[32m              }[m
+[32m+[m[32m            }[m
+[32m+[m[32m          }[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m      .list_inner_ul {[m
+[32m+[m[32m        li {[m
+[32m+[m[32m          h3 {[m
+[32m+[m[32m            text-align: center;[m
+[32m+[m[32m            &.isActive {[m
+[32m+[m[32m              margin-top: 4px;[m
+[32m+[m[32m            }[m
+[32m+[m[32m          }[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .list_inner {[m
+[32m+[m[32m    .list_inner_ul {[m
+[32m+[m[32m      li {[m
+[32m+[m[32m        display: block;[m
+[32m+[m[32m        border-bottom: 1px solid var(--border-color);[m
+[32m+[m
+[32m+[m[32m        h3 {[m
+[32m+[m[32m          display: flex;[m
+[32m+[m[32m          justify-content: space-between;[m
+[32m+[m[32m          align-items: center;[m
+[32m+[m[32m          padding-inline: 10px;[m
+[32m+[m[32m          height: 40px;[m
+[32m+[m[32m          cursor: pointer;[m
+[32m+[m[32m          overflow: hidden;[m
+[32m+[m
+[32m+[m[32m          &::after {[m
+[32m+[m[32m            content: '\F282'; // Default icon[m
+[32m+[m[32m            font-family: 'Bootstrap-icons';[m
+[32m+[m[32m            transition: content 0.3s ease-in-out; // Smooth icon change[m
+[32m+[m[32m            transition-delay: 1s; // Delay icon change[m
+[32m+[m[32m          }[m
+[32m+[m[32m          a {[m
+[32m+[m[32m            display: block;[m
+[32m+[m[32m            width: 100%;[m
+[32m+[m[32m          }[m
+[32m+[m[32m        }[m
+[32m+[m[32m        @media (max-width: 639px) {[m
+[32m+[m[32m          h3.isActive {[m
+[32m+[m[32m            transition: content 0.3s ease-in-out; // Smooth icon change[m
+[32m+[m[32m            background: var(--container-bg-active);[m
+[32m+[m[32m            border-radius: 12px;[m
+[32m+[m[32m            margin-top: 4px;[m
+[32m+[m[32m          }[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        // Change icon when active[m
+[32m+[m[32m        &:has(.active) h3::after {[m
+[32m+[m[32m          content: '\F286'; // Active icon[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        .hidden {[m
+[32m+[m[32m          max-height: 0;[m
+[32m+[m[32m          opacity: 0;[m
+[32m+[m[32m          overflow: hidden;[m
+[32m+[m[32m          padding: 0 15px;[m
+[32m+[m[32m          transition:[m
+[32m+[m[32m            max-height 0.6s ease-out,[m
+[32m+[m[32m            // Expands slower[m
+[32m+[m[32m            opacity 0.4s ease-in-out,[m
+[32m+[m[32m            padding 0.4s ease-in-out;[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        .active {[m
+[32m+[m[32m          max-height: 200px; // Adjust based on content size[m
+[32m+[m[32m          opacity: 1;[m
+[32m+[m[32m          padding: 10px 15px;[m
+[32m+[m[32m          transition:[m
+[32m+[m[32m            max-height 1s ease-in,[m
+[32m+[m[32m            // Slower when expanding[m
+[32m+[m[32m            opacity 0.5s ease-in-out,[m
+[32m+[m[32m            padding 0.5s ease-in-out;[m
+[32m+[m[32m        }[m
+[32m+[m[32m        .list_options {[m
+[32m+[m[32m          text-align: center;[m
+[32m+[m[32m          li {[m
+[32m+[m[32m            border-bottom: unset;[m
+[32m+[m[32m          }[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m

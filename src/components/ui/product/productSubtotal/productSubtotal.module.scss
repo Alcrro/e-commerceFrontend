@@ -1,0 +1,14 @@
+.cost_details {
+  display: block;
+  justify-content: space-between;
+
+  .product_cost,
+  .delivery_cost_processing {
+    font-size: 14px;
+  }
+}
+
+.subtotal_cost {
+  font-weight: bold;
+  font-size: 16px;
+}
