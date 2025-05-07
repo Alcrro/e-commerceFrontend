@@ -1,0 +1,95 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  // justify-content: center;
+  // padding: 0.4rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+
+  &.primary {
+    background-color: #0070f3;
+    color: #fff;
+  }
+
+  &.secondary {
+    background-color: green;
+    color: #fff;
+  }
+
+  &.danger {
+    background-color: rgb(194, 6, 6);
+    color: #fff;
+  }
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+  }
+  &::after,
+  &::before {
+    font-family: 'Bootstrap-icons';
+  }
+
+  &.close_modal::before {
+    content: '\F62A';
+    font-family: 'Bootstrap-icons';
+  }
+
+  .set_default_address {
+    display: block;
+    max-width: 120px;
+  }
+}
+$toggle-width: 40px;
+$toggle-height: 20px;
+$circle-diameter: 14px;
+
+.toggleContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: Arial, sans-serif;
+
+  input {
+    display: none;
+  }
+
+  .toggle {
+    position: relative;
+    width: $toggle-width;
+    height: $toggle-height;
+    border-radius: $toggle-height;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: $circle-diameter;
+      height: $circle-diameter;
+      background-color: white;
+      border-radius: 50%;
+      top: 50%;
+      left: 3px;
+      transform: translateY(-50%);
+      transition: left 0.3s ease-in-out;
+    }
+  }
+  .active {
+    background-color: #2196f3;
+  }
+  .hidden {
+    background-color: #ff5722;
+  }
+
+  input:checked + .toggle::before {
+    left: calc(100% - #{$circle-diameter} - 3px);
+  }
+}

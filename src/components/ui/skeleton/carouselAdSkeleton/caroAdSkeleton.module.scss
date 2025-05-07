@@ -1,0 +1,70 @@
+@use '@/styles/abstracts/variables' as *;
+.carousel_ad_container {
+  min-width: calc(100% - 304px);
+  min-height: 100%;
+  position: relative;
+  background-color: var(--container-bg);
+
+  .image {
+    min-width: 100%;
+    min-height: 100%;
+  }
+  .prev_button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 60px;
+    background-color: $skeleton-bg;
+    border-radius: $skeleton-radius;
+    animation: pulse 2s infinite;
+  }
+  .next_button {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 60px;
+    background-color: $skeleton-bg;
+    border-radius: $skeleton-radius;
+    animation: pulse 2s infinite;
+  }
+  .dots_container {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding-bottom: 10px;
+    animation: pulse 2s infinite;
+
+    .dot_current {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      border: 1px solid white;
+      background: white;
+      font-size: 18px;
+    }
+    .dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 50%;
+      border: 1px solid white;
+      font-size: 14px;
+    }
+  }
+}
+// Simple pulse animation
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,44 @@
+/* productRating.module.scss */
+.product_rating {
+  display: flex;
+  align-items: center;
+  font-size: 1rem; /* Adjust font size for the stars */
+  position: relative;
+}
+
+.star_background {
+  // line-height: 19px;
+  // height: 19px;
+  position: relative;
+  &::before {
+    position: relative;
+    content: '\F586\F586\F586\F586\F586'; /* Five empty stars */
+    font-family: 'Bootstrap-icons';
+    color: #d1d5db;
+    display: inline-block;
+  }
+}
+
+.star_filled {
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  overflow: hidden;
+
+  &::before {
+    position: relative;
+    content: '\F586\F586\F586\F586\F586'; /* Five filled stars */
+    font-family: 'Bootstrap-icons';
+
+    color: #fbbf24;
+    // z-index: 2;
+  }
+}
+
+.rating_text {
+  color: #6b7280; /* Text color for rating */
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+}

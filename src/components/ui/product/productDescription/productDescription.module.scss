@@ -1,0 +1,21 @@
+@use '@/styles/abstracts/mixins' as *;
+
+.product_description_inner {
+  @include flex(flex-start, column, flex-start, 0.5rem);
+  padding-block: 0.5rem;
+  width: 100%;
+}
+
+.product_description {
+  @include text-style(14px, 100%, unset);
+
+  white-space: normal; /* Allows text wrapping */
+  max-width: 100%; /* Ensures it doesn't break layout */
+}
+//
+.truncated {
+  @include ellipsis();
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+}

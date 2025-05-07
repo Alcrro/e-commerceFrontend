@@ -1,0 +1,32 @@
+.prev_btn,
+.next_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // padding: 2rem 1rem;
+
+  background-color: var(--container-bg);
+  border: 1px solid var(--container-bg);
+  border-radius: 12px;
+
+  // @media (min-width: 105rem) {
+  //   background-color: var(--container-bg-between);
+  // }
+  &.left::after {
+    content: '\F284';
+    font-family: 'Bootstrap-icons';
+    padding: 1rem 0.5rem;
+  }
+  &.right::after {
+    content: '\F285';
+    font-family: 'Bootstrap-icons';
+    padding: 1rem 0.5rem;
+  }
+  &:hover {
+    background-color: var(--container-bg);
+  }
+}
+.isDisabled {
+  cursor: not-allowed;
+  opacity: 0.3; /* Reduced opacity for disabled state */
+}

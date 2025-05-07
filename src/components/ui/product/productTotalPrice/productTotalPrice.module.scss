@@ -1,0 +1,37 @@
+.total_order {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 280px;
+  max-height: 520px;
+  height: 100%;
+  width: 100%;
+  margin-left: 10px;
+  background: var(--container-bg);
+
+  padding: 1rem;
+  margin-top: 1.75rem;
+  border-radius: 12px;
+
+  @media (max-width: 1319px) {
+    max-width: unset;
+    gap: unset;
+    width: 100%;
+    margin: unset;
+  }
+
+  .title {
+    font-weight: 600;
+    font-size: 18px;
+  }
+  .total_cost {
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+  .checkout_order {
+    padding-block: 0.25rem;
+    background-color: var(--button-color-primary);
+    border-radius: 12px;
+  }
+}
