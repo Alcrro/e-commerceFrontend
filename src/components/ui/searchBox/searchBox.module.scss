@@ -1,14 +1,12 @@
 @use '@/styles/abstracts/themes' as *;
 
 .search_box_container {
-  display: block;
-
   &:focus-within {
     &::after {
       z-index: 0;
       content: '';
       position: fixed;
-      z-index: 8;
+      z-index: 999 !important;
       inset: 0;
       width: 100vw;
       height: 100dvh;
@@ -22,6 +20,7 @@
     opacity: 0;
     transform: translateY(-10px);
     position: absolute;
+    z-index: 99999 !important;
     transition:
       opacity 0.3s ease,
       transform 0.3s ease;
@@ -34,7 +33,7 @@
     transform: translateY(0);
     pointer-events: auto;
     position: absolute;
-    z-index: 9;
+    z-index: 9999999 !important;
     top: 100%;
     background-color: var(--container-bg);
     width: 100%;
