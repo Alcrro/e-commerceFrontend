@@ -1,0 +1,12 @@
+.product_secondary_layout {
+  display: grid;
+  grid-template-columns: minmax(200px, 320px) 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+  margin-block: 10px;
+  overflow: hidden;
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1fr;
+  }
+}

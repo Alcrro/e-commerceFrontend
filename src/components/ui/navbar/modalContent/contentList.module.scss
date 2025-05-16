@@ -1,0 +1,33 @@
+.product_content {
+  padding: 0.5rem;
+  .aux_container {
+    .delete_btn_container {
+      visibility: hidden;
+
+      .delete_btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &::after {
+          content: '\F62A';
+          font-family: 'Bootstrap-icons';
+        }
+      }
+    }
+  }
+  &:hover {
+    background: #3a3232;
+    border-radius: 12px;
+    .delete_btn_container {
+      visibility: visible;
+      margin-left: auto;
+      background: var(--container-bg);
+      border-radius: 20px;
+      width: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

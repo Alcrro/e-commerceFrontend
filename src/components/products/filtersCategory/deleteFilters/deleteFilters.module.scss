@@ -1,0 +1,17 @@
+.delete_filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block: 0.5rem;
+  background: var(--container-bg-between);
+  padding: 0.75rem;
+  border-radius: 12px;
+  color: var(--button-color-danger);
+
+  .delete_filter_icon {
+    &::after {
+      content: '\F623';
+      font-family: 'Bootstrap-icons';
+    }
+  }
+}

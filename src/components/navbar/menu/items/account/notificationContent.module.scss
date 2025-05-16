@@ -1,0 +1,30 @@
+.notification_li {
+  .notification_link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.5rem;
+
+    .priority_medium_container,
+    .priority_low_container,
+    .priority_high_container {
+      width: 6px;
+      height: 30px;
+      border-radius: 12px;
+    }
+    .priority_medium_container {
+      background-color: #ffbc2d;
+    }
+
+    .priority_high_container {
+      background-color: #ff4d4d;
+    }
+    .priority_low_container {
+      background-color: #34b55e;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}

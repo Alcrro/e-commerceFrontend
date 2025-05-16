@@ -1,0 +1,21 @@
+.breadcrumb_outer_holder {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--container-bg-between);
+  .breadcrumb_inner {
+    .breadcrumb_list {
+      display: flex;
+      gap: 6px;
+
+      li:after {
+        content: ' /';
+      }
+
+      li:last-child::after {
+        content: unset;
+      }
+    }
+  }
+}

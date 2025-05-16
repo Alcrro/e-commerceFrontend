@@ -1,0 +1,75 @@
+.elements_ul {
+  display: block;
+  padding: 0.5rem;
+
+  @media (max-width: 720px) {
+    display: none;
+  }
+  .elementList {
+    list-style: none;
+    padding: 0;
+  }
+
+  .elementItem {
+    display: flex;
+    align-items: center;
+    // padding: 10px;
+    padding-bottom: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    // font-family: 'bootstrap-icons';
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      font-family: 'bootstrap-icons';
+    }
+
+    &:hover {
+      .text {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  .laptop::before {
+    content: '\F109';
+  }
+  .desktop::before {
+    content: '\F108';
+  }
+  .tv::before {
+    content: '\F26C';
+  }
+  .fridge::before {
+    content: '\F2A5';
+  }
+  .gaming::before {
+    content: '\F11B';
+  }
+  .grocery::before {
+    content: '\F290';
+  }
+  .fashion::before {
+    content: '\F1B0';
+  }
+  .cosmetics::before {
+    content: '\F1A1';
+  }
+  .home::before {
+    content: '\F015';
+  }
+  .sport::before {
+    content: '\F1FC';
+  }
+  .car::before {
+    content: '\F1B9';
+  }
+  .toys::before {
+    content: '\F1F8';
+  }
+}

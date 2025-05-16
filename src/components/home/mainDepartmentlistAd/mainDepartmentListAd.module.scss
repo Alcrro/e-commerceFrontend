@@ -1,0 +1,12 @@
+.main_department_list_ad_container {
+  display: block;
+  max-width: 97rem;
+  width: 100%;
+  border-bottom-right-radius: 12px;
+  max-height: 380px;
+  // max-height: fit-content;
+
+  @media (min-width: 97rem) {
+    border-top-right-radius: 12px;
+  }
+}

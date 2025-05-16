@@ -1,0 +1,9 @@
+.ad_content {
+  img {
+    width: calc(100% - 10px);
+    height: auto; // Maintain aspect ratio
+    max-height: 360px; // Optional: limit vertical space
+    object-fit: fill;
+    display: block;
+  }
+}

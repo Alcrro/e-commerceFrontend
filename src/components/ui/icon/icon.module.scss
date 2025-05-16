@@ -1,0 +1,15 @@
+.icon::before {
+  display: flex;
+  content: var(--icon-code, '\f128'); // Default to an info icon
+  font-family: 'Bootstrap-icons'; // Ensure this matches your icon font
+  // font-weight: 900; // Some Font Awesome icons require bold
+  display: inline-block;
+  font-size: var(--icon-size, 24px);
+  width: var(--icon-size, 24px);
+  height: var(--icon-size, 24px);
+  text-align: center;
+  line-height: var(--icon-size, 24px);
+}
+.image_container {
+  max-width: unset;
+}

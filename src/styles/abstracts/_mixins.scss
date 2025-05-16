@@ -1,0 +1,90 @@
+// abstracts/_mixins.scss
+@use '@/styles/abstracts/variables' as *;
+
+@mixin flex($justify: flex-start, $flexDire: row, $align: center, $gap: 0) {
+  display: flex;
+  justify-content: $justify;
+  flex-direction: $flexDire;
+  align-items: $align;
+  gap: $gap;
+}
+
+@mixin circle($size) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+}
+
+@mixin text-style($size, $weight, $color) {
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+}
+
+@mixin icon($width: 20, $height: 20, $borderRadius: 0) {
+  width: $height;
+  height: $height;
+  border-radius: $borderRadius;
+}
+@mixin ellipsis($white-space: 'nowrap') {
+  white-space: $white-space;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@mixin dropdown-content($translate-y: 10px) {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(#{$translate-y});
+  opacity: 0;
+  visibility: hidden;
+
+  z-index: 999;
+}
+
+@mixin dropdown-hover($selector, $hover-translate-y: 0) {
+  &:hover #{$selector} {
+    opacity: 1;
+    visibility: visible;
+    top: 100%;
+    transform: translateX(-50%) translateY(#{$hover-translate-y});
+  }
+}
+
+@mixin after-icon($default, $hover, $font-size: 12px) {
+  &::after {
+    content: $default;
+    font-family: 'Bootstrap-icons', Arial, Helvetica, sans-serif;
+    font-size: $font-size;
+    transition: content 0.3s ease;
+  }
+
+  &:hover::after {
+    content: $hover;
+  }
+}
+@mixin hide-username-on-mobile($selector) {
+  @media (max-width: 540px) {
+    #{$selector} {
+      display: none;
+    }
+  }
+}
+
+@mixin custom-scrollbar($track: var(--background), $thumb: #888, $hover: #555) {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $track;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $thumb;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: $hover;
+  }
+}

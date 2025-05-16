@@ -1,0 +1,23 @@
+@use '@/styles/abstracts/variables' as *;
+
+.product_card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 340px;
+  height: 380px;
+  background-color: var(--container-bg);
+  border-radius: $skeleton-radius;
+  padding: 0.5rem;
+  animation: pulse 2s infinite;
+}
+// Simple pulse animation
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

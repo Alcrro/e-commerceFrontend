@@ -1,0 +1,80 @@
+.carousel_container {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+
+  &.loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &.loading {
+    pointer-events: none; // optional, prevent interaction
+  }
+
+  .carousel_inner {
+    // display: flex
+    // position: relative;
+    // width: 100%;
+
+    .carousel_inner {
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .prev_button_container,
+    .next_button_container {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 11;
+      // ✅ Smooth transition for position changes
+      transition:
+        left 0.3s ease,
+        right 0.3s ease;
+      pointer-events: all;
+    }
+
+    .prev_button_container.variant_one,
+    .prev_button_container.variant_two {
+      left: 0;
+    }
+    .next_button_container.variant_one,
+    .next_button_container.variant_two {
+      right: 0;
+    }
+
+    @media (min-width: 1680px) {
+      .prev_button_container.variant_two {
+        left: -50px;
+      }
+    }
+    @media (min-width: 1680px) {
+      .next_button_container.variant_two {
+        right: -50px;
+        z-index: 11;
+      }
+    }
+
+    .carousel_content {
+      display: flex;
+      justify-content: space-evenly;
+      overflow: hidden;
+      gap: 6px;
+      width: 100%;
+
+      .suggestion_product {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+        max-width: 275px;
+        width: 100%;
+        min-height: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.content_list {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.favorite_btn {
+  background: var(--button-color-primary);
+  border-radius: 12px;
+  padding: 0.25rem;
+  margin-block: 4px;
+}

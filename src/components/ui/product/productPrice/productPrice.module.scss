@@ -1,0 +1,12 @@
+/* productPrice.module.scss */
+.product_price_inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.product_price {
+  font-size: 18px;
+  font-weight: bold;
+  color: red;
+}

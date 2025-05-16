@@ -1,0 +1,28 @@
+.ads_container {
+  .ads_inner {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .dot_ad_current {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      border: 1px solid white;
+      background: white;
+      font-size: 18px;
+    }
+    .dot_ad {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 50%;
+      border: 1px solid white;
+
+      font-size: 14px;
+    }
+  }
+}
