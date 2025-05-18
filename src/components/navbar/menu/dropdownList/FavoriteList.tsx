@@ -22,7 +22,7 @@ const FavoriteList = ({ favorites }: { favorites: IFavorite }) => {
           <div className="price text-sm">{product.price}</div>
 
           <div className="remove_product opacity-0 group-hover/favorite:opacity-100 transition-opacity duration-200">
-            <RemoveProduct productId={product._id} />
+            <RemoveProduct productId={product._id} type="favorite" />
           </div>
         </div>
       </div>
