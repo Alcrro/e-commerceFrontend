@@ -1,16 +1,33 @@
-import React from 'react';
-import Logo from './logo/Logo';
-import Menu from './menu/items/Menu';
-import style from './navbar.module.scss';
+import NavbarClient from './NavbarClient';
+import { getUserApi } from '@/service/userApi';
+import { fetchNotificationAPI } from '@/service/notificationApi';
+import { getFavoriteApi } from '@/service/favoriteApi';
+import { cartApi } from '@/service/cartApi';
 
-const Navbar = () => {
+const safeApiCall = async (fn: () => Promise<any>) => {
+  try {
+    return await fn();
+  } catch {
+    return null;
+  }
+};
+
+const Navbar = async () => {
+  const [user, notifications, favorites, carts] = await Promise.all([
+    safeApiCall(getUserApi),
+    safeApiCall(fetchNotificationAPI),
+    safeApiCall(getFavoriteApi),
+    safeApiCall(cartApi),
+  ]);
+
   return (
-    <nav className="nav navbar">
-      <div className={style.navbar_container}>
-        <Logo />
-        <Menu />
-      </div>
-    </nav>
+    <NavbarClient
+      user={user?.data || null}
+      notifications={notifications?.data || []}
+      favorites={favorites?.data || []}
+      carts={carts?.data || []}
+    />
   );
 };
+
 export default Navbar;
