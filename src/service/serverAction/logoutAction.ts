@@ -7,7 +7,7 @@ export const logoutAction = async () => {
     if (!response.ok) {
       console.error('Logout failed', await response.json());
     } else {
-      return response.ok;
+      return 'You are successfully logout!';
     }
   } catch (error) {
     console.log('logout error: ', error);
