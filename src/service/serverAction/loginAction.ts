@@ -1,34 +1,45 @@
 import { loginSchema } from '@/utils/validations/loginSchema';
-import { loginApi } from '../loginApi';
+import { loginApi } from '../auth/loginApi';
+import { getToken } from '../getToken';
 
-const handleLoginAction = async (prevState: any, formData: FormData) => {
+const handleLoginAction = async (formData: FormData) => {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
+  const validate = loginSchema.safeParse({ email, password });
 
-  // ✅ Validate input with Zod
-  const result = loginSchema.safeParse({ email, password });
-  if (!result.success) {
-    // ❌ Return validation errors
+  if (!validate.success) {
     return {
       success: false,
-      message: 'Validation failed',
-      errors: result.error.flatten().fieldErrors,
+      errors: validate.error.flatten().fieldErrors,
     };
   }
 
   try {
-    await loginApi(result.data.email, result.data.password);
+    const token = await getToken();
 
-    return {
-      success: true,
-      message: 'Login successful',
-      redirect: '/', // ✅ Add redirect path here
-    };
+    if (token) {
+      return {
+        success: false,
+        message: 'You are already logged in',
+      };
+    }
+    const result = await loginApi(validate.data.email, validate.data.password);
+
+    if (result.success === false) {
+      return {
+        success: false,
+        message: result.message,
+      };
+    } else {
+      return {
+        success: true,
+        message: result.message,
+      };
+    }
   } catch (error) {
     return {
       success: false,
-      message: 'Login failed. Please check your credentials.',
-      errors: {},
+      message: 'Login failed due to server error',
     };
   }
 };

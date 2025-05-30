@@ -1,17 +1,16 @@
-'use server';
-
 import { registerSchema } from '@/utils/validations/registerSchema';
 import { signUpApi } from '../signUpApi';
 
-const registerUserAction = async (
-  prevState: { success: boolean; message: string },
-  formData: FormData
-) => {
-  const email = formData.get('email')?.toString().trim();
-  const password = formData.get('password')?.toString().trim();
+const registerUserAction = async (formData: FormData) => {
+  const rawData: Record<string, string> = {};
+
+  for (const [key, value] of formData.entries()) {
+    rawData[key] = typeof value === 'string' ? value.trim() : '';
+  }
 
   // ✅ Validate input using Zod
-  const validatedData = registerSchema.safeParse({ email, password });
+
+  const validatedData = registerSchema.safeParse(rawData);
 
   if (!validatedData.success) {
     // ✅ Extract and format Zod validation errors
@@ -21,6 +20,7 @@ const registerUserAction = async (
     const firstError =
       errorMessages.email?._errors?.join(', ') ||
       errorMessages.password?._errors?.join(', ') ||
+      errorMessages.confirmPassword?._errors?.join(', ') ||
       'Invalid input.';
 
     return { success: false, message: firstError }; // ✅ Make sure error is always a string
@@ -29,14 +29,12 @@ const registerUserAction = async (
   // ✅ Call API with validated data
   const response = await signUpApi(
     validatedData.data.email,
-    validatedData.data.password
+    validatedData.data.password,
+    validatedData.data.confirmPassword
   );
+  console.log(response);
 
-  if (!response.success) {
-    return { success: response.success, message: response.message };
-  }
-
-  return { success: response.success, message: response.message };
+  return response;
 };
 
 export default registerUserAction;
