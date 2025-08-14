@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 E-commerce Backend API - System Design
 
-## Getting Started
+## 1. Overview
+Acest proiect este un backend API pentru o aplicație e-commerce, proiectat pentru a fi scalabil, sigur și ușor de întreținut.  
+Se bazează pe arhitectură **Clean Architecture**, separând clar logica de business de infrastructură și facilitând extinderea.
 
-First, run the development server:
+**Stack principal:**
+- **Backend:** Node.js + Express.js
+- **Database:** MongoDB + Mongoose
+- **Auth:** JWT + Refresh Tokens
+- **Storage:** AWS S3 (imagini produse)
+- **Containerizare:** Docker
+- **Hosting:** AWS EC2 / Kubernetes (scalare orizontală)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 2. Design Discussion (Transcript)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> **Arhitect:** Care e target-ul de utilizatori pentru primul an?  
+> **Stakeholder:** Estimăm 50.000 de utilizatori înregistrați, din care 5.000 activi zilnic. La evenimente ca Black Friday putem avea și 50.000 de utilizatori simultan.  
+> **Developer:** Atunci trebuie să gândim arhitectura pentru scalare orizontală și caching.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+> **Arhitect:** Ce tipuri de utilizatori vom avea?  
+> **Stakeholder:** Clienți finali, administratori și parteneri care se conectează prin API extern.  
+> **Developer:** Ok, atunci vom avea roluri diferite și middleware de autorizare bazat pe roluri.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> **Arhitect:** Cum arată produsele din punct de vedere al datelor?  
+> **Stakeholder:** Unele au mărimi și culori, altele specificații tehnice. Pot apărea câmpuri noi.  
+> **Developer:** Folosim MongoDB pentru flexibilitate, evităm rigiditatea unui SQL clasic.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+> **Arhitect:** Ce e mai important: viteză de răspuns sau acuratețea stocului în timp real?  
+> **Stakeholder:** Viteză. E ok dacă actualizarea stocului apare cu o mică întârziere.  
+> **Developer:** Atunci mergem pe *eventual consistency* și caching în Redis pentru produsele populare.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> **Arhitect:** Care e bugetul de hosting la început?  
+> **Stakeholder:** Minimal, dar să putem scala rapid dacă traficul crește.  
+> **Developer:** Începem cu MongoDB Atlas M10 și AWS EC2 t3.medium, apoi adăugăm instanțe și CDN când e nevoie.
+
+---
+
+> **Arhitect:** Ce punem în MVP și ce lăsăm pentru faza următoare?  
+> **Stakeholder:** MVP-ul trebuie să aibă login, listare produse, filtrare, coș, plasare comandă și panel admin.  
+> **Developer:** Plățile online, recomandările și notificările le facem în faza 2.
+
+---
+
+## 3. Architecture Diagram
+
